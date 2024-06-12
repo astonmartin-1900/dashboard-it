@@ -1,0 +1,15 @@
+<style>
+  .image_change{
+    display: flex;
+    flex-direction: column;
+  }  
+</style>
+<div class="image_change">
+    {% if widget.is_initial %}
+        <img src="{{ widget.value.url }}" alt="{{ widget.value.name }}" width="100">
+    {% endif %}
+    {{ widget.input }} </br>
+    {% if widget.is_initial %}
+        <input type="file" name="{{ widget.name }}" id="{{ widget.id_for_label }}-new">
+    {% endif %}
+</div>

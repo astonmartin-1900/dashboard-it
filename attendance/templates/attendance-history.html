@@ -1,0 +1,144 @@
+{% extends "base.html" %}
+{% load static %}
+{% block page-title %} | Attendance{% endblock page-title %}
+{% block styles %}
+    <link rel="stylesheet" type="text/css" href="{% static '/css/attendance.css' %}">
+{% endblock styles %}
+{% block content %}
+<div>  
+    <div class="btns">
+        <a href="{% url 'attendance:attendance_page' %}" onclick="openForm()">
+            <img src="{% static '/img/back.png' %}" alt="update page"> 
+            <span class="add">Back to Attendance</span>
+        </a>
+        <div class="weeks_btns">
+            <button class="button" id="prev"> Back</button>
+            <button class="button" id="next">Next</button>
+        </div>
+    </div>
+    <h2 class="page-title">Attendance history</h2>
+    <div class="icons_info">
+        <ul class="leader_engager_icons">
+            <li class="leader_info"><img src="{% static '/img/leader_icon_drk.svg' %}" alt="leader"><span>WOR LEADER</span></li>
+            <li class="leader_info"><img class="padding_info" src="{% static '/img/engager_icon_drk.svg ' %}" alt="engager"><span>COMUNICATION ENGAGER</span></li>
+        </ul>
+        <ul class="leader_engager_status">
+            <li class="leader_info"><span class="circle_present"></span><span>Yes, present</span></li>
+            <li class="leader_info"><span class="circle_absent"></span><span>No, not present</span></li>
+            <li class="leader_info"><span class="circle_excused "></span><span>Excused (back-up in place)</span></li>
+            <li class="leader_info"><span class="circle_vacation "></span><span>On Vacation</span></li>
+        </ul>
+    </div>
+</div>
+<div class="attendance_content">
+    <div class="names">
+        <table>
+            <tr>
+                    <td ><span>Names</span><span><br>IMS Team</br></span></td>
+            </tr>
+            {% for user in users%} 
+                <tr>
+                    <td>{{user.first_name}} {{user.last_name}}</td>
+                </tr>
+            {% endfor%}
+        </table>
+    </div>
+    <div class="weeks">
+        <table class="carousel">
+            <tbody class="carouselContainer">
+                <tr >
+                    {% for week in week_list%}
+                        <td class="slides"><span>Week {{week.week_number}}</span><span><br>{{week.start_date|date:"m.d"}} - {{week.end_date|date:"m.d"}}</br></span></td>   
+                    {% endfor%} 
+                </tr>
+                {% for user in users%}     
+                    <tr id="{{user.id}}">
+                        {% for week in week_list%}
+                            <td class="slides" id="week.week_number">
+                                {% for week_role in week_roles%}
+                                    {% if week_role.wor_leader.pk == user.pk and week_role.week_id.week_number == week.week_number  %}
+                                        <div class="
+                                        {% for attendance in attendances%}
+                                            {% if user.pk == attendance.person.pk and week.week_number == attendance.date.week_number %}
+                                                {{attendance.user_status}}
+                                            {% endif %}
+                                        {% endfor%}   
+                                        leader"><span></span></div>
+                                    {% elif week_role.wor_engager.pk == user.pk and week_role.week_id.week_number == week.week_number  %}
+                                        <div class="
+                                        {% for attendance in attendances%}
+                                            {% if user.pk == attendance.person.pk and week.week_number == attendance.date.week_number %}
+                                                {{attendance.user_status}}
+                                            {% endif %}
+                                        {% endfor%} 
+                                        engager"><span></span></div>
+                                    {% elif week_role.week_id.week_number == week.week_number%}
+                                        <div class="
+                                        {% for attendance in attendances%}
+                                            {% if user.pk == attendance.person.pk and week.week_number == attendance.date.week_number %}
+                                                {{attendance.user_status}}
+                                            {% endif %}
+                                        {% endfor%}             
+                                        "><span></span></div>
+                                    {% endif %}
+                                {% endfor%} 
+                            </td>
+                        {% endfor%}
+                    </tr>        
+                {% endfor%}                   
+            </tbody>
+        </table>
+    </div>
+</div>
+<script src="{% static '/js/attendance.js' %}"></script>
+
+<script>
+    // $(document).ready(function () {
+    //     $('div.attendance_content').css('display', 'block');
+    // });
+    ////////////////// Carousel /////////////////
+    var carouselContainer = document.querySelector(".carouselContainer");  
+    var slides = document.querySelectorAll('.slides');  
+    var next = document.querySelector('#next');  
+    var prev = document.querySelector('#prev');  
+    var counter = 0;  
+    if ( (parseInt("{{current_week}}") -1) > 47){
+        counter = 47
+    } else {
+        counter = parseInt('{{current_week}}') -1
+    }
+    var size = slides[0].clientWidth +1;  
+    console.log(size);
+    carouselContainer.style.transform = 'translateX(' + (-size * counter)   + 'px';  
+    console.log(carouselContainer.style.transform);
+    next.addEventListener('click',()=>{  
+    if (counter>=47)return;  
+        carouselContainer.style.transition = 'transform 0.4s ease-in-out'; 
+        counter++;
+        carouselContainer.style.transform = 'translateX(' + (-size * counter )  + 'px';  
+    });  
+    prev.addEventListener('click',()=>{  
+    if (counter<=0)return;  
+        carouselContainer.style.transition = 'transform 0.4s ease-in-out';  
+        counter--;  
+        carouselContainer.style.transform = 'translateX(' + (-size * counter ) + 'px';  
+    });  
+    carouselContainer.addEventListener('transitionend',()=>{  
+    console.log(slides[counter]);  
+    if(slides[counter].id ==='lastslide'){  
+        carouselContainer.style.transition = 'none';  
+        counter = slides.length - 2;      
+        carouselContainer.style.transform = 'translateX(' + (-size * counter ) + 'px';  
+    }  
+    });  
+    carouselContainer.addEventListener('transitionend',()=>{  
+    console.log(slides[counter]);  
+    if(slides[counter].id ==='firstslide'){  
+        carouselContainer.style.transition = 'none';  
+        counter = slides.length - counter;      
+        carouselContainer.style.transform = 'translateX(' + (-size * counter ) + 'px';  
+    }  
+    });
+</script>
+
+{% endblock content %}

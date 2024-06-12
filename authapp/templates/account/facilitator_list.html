@@ -1,0 +1,102 @@
+{% load static %}
+<div class="selector_headling">
+    <div class="wor_week">
+
+    </div>
+    <div class="wor_leader">
+        <img src="{% static '/img/leader_icon.svg' %}" alt="WOR leader">
+    </div>
+    <div class="wor_engager">
+        <img src="{% static '/img/engager_icon.svg' %}" alt="Engager">
+    </div>
+</div>
+{% for week in week_list %}
+    {% if week.week_number >= current_week %}
+        <div class="selector_body_item" id="week_1">
+            <div class="wor_week">
+                <span class="week">Week #{{week.week_number}}</span><br/>
+                <span class="period">{{week.start_date|date:"m.d"}} - {{week.end_date|date:"m.d"}}</span>
+            </div>
+            {% for week_role in week_roles%}
+                {% if week_role.week_id.week_number == week.week_number  %}
+                    <div class="wor_leader">
+                        <div class="user_profile">
+                            <div class="user_image">
+                                <img src="{{week_role.wor_leader.user_image.url}}" 
+                                     alt="{{week_role.wor_leader.first_name}} {{week_role.wor_leader.last_name}}"
+                                     title="{{week_role.wor_leader.first_name}} {{week_role.wor_leader.last_name}}">
+                            </div>
+                            <div class="user_information">
+                                <span class="first_name">{{week_role.wor_leader.first_name}} </span>
+                                <span class="last_name">{{week_role.wor_leader.last_name}}</span>
+                                <span class="email" style="display: none;">{{week_role.wor_leader.email}}</span>
+                                <span class="position" style="display: none;">{{week_role.wor_leader.user_position}}</span>
+                            </div>
+                            <div class="checkbox-dropdown">
+                                <ul class="checkbox-dropdown-list">
+                                    {% for user in users%}
+                                        {% if user.pk != week_role.wor_leader.pk %}
+                                        <li>
+                                            <input type="radio" id="week_{{week.week_number}}_leader_{{user.pk}}" value="week_{{week.week_number}}-id_{{user.pk}}" name="leader_week_{{week.week_number}}" /> 
+                                            <label for="week_{{week.week_number}}_leader_{{user.pk}}" id="leader_id_{{user.pk}}">
+                                                <div class="user_image">
+                                                    <img src="{{user.user_image.url}}" 
+                                                         alt="{{user.first_name}} {{user.last_name}}"
+                                                         title="{{user.first_name}} {{user.last_name}}">
+                                                </div>
+                                                <div class="user_information">
+                                                    <span class="first_name">{{user.first_name}}</span>
+                                                    <span class="last_name">{{user.last_name}}</span>
+                                                </div> 
+                                            </label>
+                                        </li>
+                                        {% endif %} 
+                                    {% endfor %}         
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                {% endif %}
+                {% if week_role.week_id.week_number == week.week_number  %}
+                    <div class="wor_engager">
+                        <div class="user_profile">
+                            <div class="user_image">
+                                <img src="{{week_role.wor_engager.user_image.url}}" 
+                                     alt="{{week_role.wor_engager.first_name}} {{week_role.wor_engager.last_name}}"
+                                     title="{{week_role.wor_engager.first_name}} {{week_role.wor_engager.last_name}}">
+                            </div>
+                            <div class="user_information">
+                                <span class="first_name">{{week_role.wor_engager.first_name}}</span>
+                                <span class="last_name">{{week_role.wor_engager.last_name}}</span>
+                                <span class="email" style="display: none;">{{week_role.wor_engager.email}}</span>
+                                <span class="position" style="display: none;">{{week_role.wor_engager.user_position}}</span>
+                            </div>
+                            <div class="checkbox-dropdown">
+                                <ul class="checkbox-dropdown-list">
+                                    {% for user in users%}
+                                        {% if user.pk != week_role.wor_engager.pk %}
+                                            <li>
+                                                <input type="radio" id="week_{{week.week_number}}_engager_{{user.pk}}" value="week_{{week.week_number}}-id_{{user.pk}}" name="engager_week_{{week.week_number}}" /> 
+                                                <label for="week_{{week.week_number}}_engager_{{user.pk}}" id="engager_id_{{user.pk}}">
+                                                    <div class="user_image">
+                                                        <img src="{{user.user_image.url}}" 
+                                                             alt="{{user.first_name}} {{user.last_name}}"
+                                                             title="{{user.first_name}} {{user.last_name}}">
+                                                    </div>
+                                                    <div class="user_information">
+                                                        <span class="first_name">{{user.first_name}}</span>
+                                                        <span class="last_name">{{user.last_name}}</span>
+                                                    </div> 
+                                                </label>
+                                            </li>
+                                        {% endif %}
+                                    {% endfor %}           
+                                </ul>
+                            </div> 
+                        </div> 
+                    </div>
+                {% endif %}
+            {% endfor %}
+        </div>
+    {% endif %}
+{% endfor %}

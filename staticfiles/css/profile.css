@@ -1,0 +1,259 @@
+.btns .edit_profile, .btns .password_change{
+    /* block styles */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative; 
+    margin-top: -8px;
+    /* border styles */
+    border: 2px solid black;
+    border-radius: 4px;
+    padding: 8px 12px;
+    /* text styles */
+    text-align: center;
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 16px;
+    letter-spacing: 0.01em;
+    text-decoration: none; 
+}
+.btns .edit_profile{
+    color: #2E8025;
+    border-color: #2E8025;
+}
+.btns .password_change{
+    color: #E8B100;
+    border-color: #E8B100;
+}
+/* ///////////////// USER DESCRIPTION BLOCKS STYLING ///////////////// */
+.user_about{
+    display: flex;
+    justify-content: space-evenly;
+    width: 100%;
+    margin-bottom: 36px;
+}
+.user_about .user_visuals{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 20%;
+    padding: 2.5%;
+}
+.user_about .user_profile_description{
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    justify-content: space-between;
+    align-content: space-evenly;
+    width: 75%;
+    padding: 2.5%;
+}
+/* ///////////////// USER DESCRIPTION STYLLING ///////////////// */
+.user_about .user_profile_description .label{
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 16px;
+    /* identical to box height */
+    letter-spacing: 0.01em;
+    /* Text */
+    color: #34220D;
+    opacity: 0.5;
+}
+.user_about .user_profile_description > div{
+    display: flex;
+    flex-direction: column;
+}
+.user_about .user_profile_description p{
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 21px;
+    /* Text */
+    color: #34220D;
+}
+.user_about .user_profile_description .user_name,
+.user_about .user_profile_description .user_position
+{
+    width: 50%;
+}
+.user_about .user_profile_description .user_emal{
+    width: 40%;
+}
+.user_about .user_profile_description .user_description{
+    width: 100%;
+}
+.user_about .user_profile_description .user_emal p:last-child,
+.user_about .user_profile_description .user_description p:last-child,
+.user_about .user_profile_description .user_name p:last-child,
+.user_about .user_profile_description .user_position p:last-child
+{
+    border-bottom: 1px solid rgba(52, 34, 13, 0.3);
+}
+
+/* ///////////////// Recognition styling ///////////////// */
+.user_about .user_visuals .user_image{
+    width: 100%;
+    margin: 0 0 18px;
+}
+.user_about .user_visuals .user_image img{
+    width: 100%;
+    height: auto;
+    aspect-ratio: 1/1;
+}
+.user_about .user_visuals .user_recognitions .member_stars{
+    display: flex;
+    justify-content: space-between;
+    padding-bottom: 6px;
+    border-top: 1px solid #34220D4D;
+    border-bottom: 1px solid #34220D4D;
+}
+.user_about .user_visuals .user_recognitions .member_stars .star{
+    display: inline-block;
+}
+.user_about .user_visuals .user_recognitions .member_stars .star img{
+    width: 15px;
+    height:15px;
+}
+.user_about .user_visuals .user_recognitions .member_stars .star span{
+    display: block;
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 12px;
+    line-height: 14px;
+    text-align: center;
+}
+.user_about .user_visuals .user_recognitions .total_stars{
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    width: 100%;
+    padding: 10px 0px 0px 0px;
+
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 13px;
+    line-height: 15px;
+    /* identical to box height */
+    letter-spacing: 0.01em;
+    /* #63513D */
+    color: #63513D;
+}
+.initiative{
+    filter: invert(33%) sepia(61%) saturate(3203%) hue-rotate(312deg) brightness(95%) contrast(82%);
+}
+.ube{
+    filter: invert(78%) sepia(46%) saturate(4624%) hue-rotate(8deg) brightness(101%) contrast(101%);
+}
+.pwyp{
+    filter: invert(53%) sepia(60%) saturate(4035%) hue-rotate(166deg) brightness(85%) contrast(101%);
+}
+.resut_focus{
+    filter: invert(50%) sepia(92%) saturate(2313%) hue-rotate(2deg) brightness(96%) contrast(96%);        
+}
+.know_yourself{
+    filter: invert(37%) sepia(100%) saturate(359%) hue-rotate(66deg) brightness(90%) contrast(93%);        
+}
+.proactive_cooperation{
+    filter: invert(32%) sepia(77%) saturate(367%) hue-rotate(210deg) brightness(94%) contrast(94%);
+}
+/* ///////////////// Actions styling ///////////////// */
+.user_actions{
+    width: 98%;
+    margin: 0 1%;
+}
+.user_actions .label{
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 16px;
+    /* identical to box height */
+    letter-spacing: 0.01em;
+    /* Text */
+    color: #34220D;
+    opacity: 0.5;
+}
+.actions_list{
+    display: flex;
+    flex-wrap: nowrap;
+    overflow: hidden;
+    overflow-x: auto;
+    justify-content: flex-start;
+    background-color: #eeeeee;
+    border-radius: 4px;
+    padding: 4px;
+}
+.actions_list .task-content{
+    /* display: flex;
+    justify-content: space-around;
+    flex-direction: column; */
+    margin: 16px 6px;
+    width: 172px;
+    background-color: white;
+    padding: 8px;
+    border-radius: 4px;
+}
+.actions_list .task-text .topic {
+    padding-top: 20px;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 16px;
+    color: #34220D;
+    overflow: hidden;
+}
+.actions_list .task-text .task-description {
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 16px;
+    color: #34220D;
+    overflow: hidden;
+}
+.actions_list .date-status span {
+    font-size: 12px;
+    line-height: 28px;
+    
+}
+.actions_list .date-status .task-date{
+    float: right;
+    color: #34220D;
+}
+.actions_list .members {
+    display: flex;
+    align-items: center;
+    margin: 0 auto;
+    max-height: 50px;
+    overflow: hidden;
+    gap: 5px;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+    width: 100%;
+    border-top: 1px solid rgba(52, 34, 13, 0.3);
+    padding-top: 10px;
+}
+.actions_list .members img {
+    border-radius: 50%;
+    width: 35px;
+    height: 35px;
+}
+.date-status .draft-status{
+    color: #008FC7;
+    background: rgba(0, 143, 199, .2);
+    padding: 4px 8px;
+}
+
+@media only screen and (max-width: 1400px) {
+    .user_about .user_profile_description p {
+        display: block;
+        width: 280px;
+        height: 22px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+}

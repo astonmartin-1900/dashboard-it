@@ -1,0 +1,26 @@
+Content-Type: text/plain; charset="utf-8"
+MIME-Version: 1.0
+Content-Transfer-Encoding: 7bit
+Subject: Password reset on 127.0.0.1:7000
+From: webmaster@localhost
+To: vasyl.dordiak@ua.nestle.com
+Date: Fri, 10 Mar 2023 11:03:13 -0000
+Message-ID: 
+ <167844619372.6076.10023849657781545790@UA15-1LQDH5A.EUC.nestle.com>
+
+
+Hello, vasyl.dordiak@ua.nestle.com
+
+We received a request to reset the password for your account for this email address. To initiate the password reset process for your account, click the link below.
+
+http://127.0.0.1:7000/reset/MQ/bkuk9d-ba7db7bfa916b98929787f912ae88332/
+
+This link can only be used once. If you need to reset your password again, please visit http://127.0.0.1:7000 and request another reset.
+
+If you did not make this request, you can simply ignore this email.
+
+Sincerely,
+The 127.0.0.1:7000 Website Team
+
+
+-------------------------------------------------------------------------------

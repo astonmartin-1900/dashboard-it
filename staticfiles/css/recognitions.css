@@ -1,0 +1,439 @@
+
+/* Stars implementation */
+.all_stars{
+    display: flex;
+    width: 100%;
+    justify-content: space-around;
+    padding: 12px 0px;
+}
+.all_stars .stars{
+    display: flex;
+    align-items: center;
+    padding-left: 8px;
+    /* Fonts */
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 16px;
+}
+.all_stars .stars::before{
+    content: "";
+    background: url(menu-img/star.svg);
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    margin:-18px 3px 0 0;
+}
+.all_stars .stars:first-child{
+    padding-left: 0px;
+}
+.initiative{
+    filter: invert(33%) sepia(61%) saturate(3203%) hue-rotate(312deg) brightness(95%) contrast(82%);
+}
+.ube{
+    filter: invert(78%) sepia(46%) saturate(4624%) hue-rotate(8deg) brightness(101%) contrast(101%);
+}
+.pwyp{
+    filter: invert(53%) sepia(60%) saturate(4035%) hue-rotate(166deg) brightness(85%) contrast(101%);
+}
+.resut_focus{
+    filter: invert(50%) sepia(92%) saturate(2313%) hue-rotate(2deg) brightness(96%) contrast(96%);        
+}
+.know_yourself{
+    filter: invert(37%) sepia(100%) saturate(359%) hue-rotate(66deg) brightness(90%) contrast(93%);        
+}
+.proactive_cooperation{
+    filter: invert(32%) sepia(77%) saturate(367%) hue-rotate(210deg) brightness(94%) contrast(94%);
+}
+.dots {
+    padding-bottom: 5px;
+    padding-left: 10px;
+}
+/* Sorting with dropdown */
+.sorting{
+    display: flex;
+}
+.dropdown{
+    padding: 0px 8px 30px 8px;
+}
+.sorting span{
+    padding: 8px 8px 8px 16px;
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 16px;
+    /* identical to box height */
+
+    letter-spacing: 0.01em;
+
+    /* Text */
+
+    color: #34220D;
+
+    opacity: 0.5;
+}
+.dropdown .dropdown-select{
+    display: flex;
+    position: relative;
+    flex-direction: row;
+    align-items: center;
+    padding: 8px 8px 8px 16px;
+    gap: 10px;
+
+    width: 200px;
+    height: 30px;
+
+    border: 1px solid #D2D2D2;
+    border-radius: 4px;
+    background-color: #fff;
+    /* Text css */
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 16px;
+    color: #63513D;
+}
+.dropdown .dropdown-select:after{
+    content: url('menu-img/filter.svg');
+    display: inline-block;
+    position: absolute;
+    width: 15px;
+    height: 15px;
+    right: 5px;
+}
+.dropdown .dropdown-select-menu{
+    position: absolute;
+    z-index: 99;
+    display: none;
+}
+.dropdown .dropdown-select-menu.show{
+    display: block;
+}
+.dropdown .dropdown-select-menu .dropdown-select-item{
+    display: flex;
+    flex-direction: column;
+    align-items:flex-start;
+    padding: 8px 8px 8px 16px;
+    gap: 10px;
+
+    width: 200px;
+    height: 30px;
+
+    border: 1px solid #D2D2D2;
+    background-color: #fff;
+    /* Text css */
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 16px;
+}
+.dropdown .dropdown-select-menu .dropdown-select-item:first-child{
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
+}
+.dropdown .dropdown-select-menu .dropdown-select-item:last-child{
+    border-bottom-left-radius: 4px;
+    border-bottom-right-radius: 4px;
+}
+.dropdown .dropdown-select-menu .dropdown-select-item p{
+    margin-top: -5px;
+}
+.dropdown .dropdown-select-menu .dropdown-select-item p::before{
+    content: "";
+    background: url(menu-img/star.svg);
+    display: inline-block;
+    position: relative;
+    width: 20px;
+    height: 20px;
+    zoom: 80%;
+    top:3px;
+    margin-right: 5px;
+}
+/*Recognition member block*/
+.recognition_block{
+    display: flex;
+    width: 100%;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    align-items: flex-start;
+}
+.recognition_block .recognition_item{
+    /* Auto layout */
+    display: block;
+    position: relative;
+    float: left;
+    margin: 0px 0px 12px 8px;
+    padding: 8px 9px 0px 9px;
+    width: 23%;
+    min-width: 218px;
+    max-width: 300px;
+    background: #FFFFFF;
+    border: 2px solid rgba(128, 128, 128, 0.199);
+    /* Drop Shadow */
+    box-shadow: 0px 3px 9px rgba(0, 0, 0, 0.218);
+    border-radius: 4px;
+}
+/* .recognition_block .recognition_item:first-child{
+    margin-left: 10px;
+}
+.recognition_block .recognition_item:last-child{
+    margin-right: 10px;
+} */
+.recognition_block .recognition_item .member{
+    display: block;
+    position: relative;
+    height: 60px;
+    width: 100%;
+}
+.recognition_block .recognition_item .member .member-img {
+    display: inline-block;
+    float:left;
+    height: 50px;
+    width: 50px;
+    border-radius: 50%;
+}
+.recognition_block .recognition_item .member .performer_name {
+    display: block;
+    width: calc(60%);
+    float:left;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+
+    margin: 8px 9px 0px 15px;
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 16px;
+    /* identical to box height */
+
+    letter-spacing: 0.01em;
+
+    /* Text */
+
+    color: #34220D;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+.recognition_block .recognition_item .member .performer_surname {
+    display: block;
+    float:left;
+    margin: 0px 9px 0px 15px;
+    width: calc(60%);
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 21px;
+    letter-spacing: 0.01em;
+    /* Text */
+    color: #34220D;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+.recognition_block .recognition_item .member_stars{
+    display: flex;
+    justify-content: space-between;
+    padding-bottom: 6px;
+    border-top: 1px solid #34220D4D;
+    border-bottom: 1px solid #34220D4D;
+}
+.recognition_block .recognition_item .member_stars .star{
+    display: inline-block;
+}
+.recognition_block .recognition_item .member_stars .star img{
+    width: 15px;
+    height:15px;
+}
+.recognition_block .recognition_item .member_stars .star span{
+    display: block;
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 12px;
+    line-height: 14px;
+    text-align: center;
+}
+.recognition_block .recognition_item .total_stars{
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    padding: 10px 0px 0px 0px;
+
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 13px;
+    line-height: 15px;
+    /* identical to box height */
+
+    letter-spacing: 0.01em;
+
+    /* #63513D */
+
+    color: #63513D;
+}
+/* Stars dropdown*/
+.recognition_block .stars_dropdown{
+    display: none;
+    justify-content: space-between;
+    float: left;
+    position: absolute;
+    z-index: 1;
+    padding: 8px 12px 0px;
+    margin-left: -11px;
+    width: calc(18.5%);
+    background: #FFFFFF;
+    border: 2px solid rgba(128, 128, 128, 0.199);
+    /* Drop Shadow */
+    box-shadow: 0px 3px 9px rgba(0, 0, 0, 0.218);
+    border-radius: 4px;
+}
+.stars_dropdown.show_form{
+    display: flex;
+    width: calc(100% + 4px);
+}
+.recognition_block .stars_dropdown .star img{
+    width: 15px;
+    height:15px;
+}
+.recognition_block .stars_dropdown .star{
+    padding-bottom: 10px;
+}
+.recognition_block .stars_dropdown .star input[type='text']{
+    display: block;
+    width: 18px;
+    height:10px;
+    margin-left: -2px;
+    margin-bottom: 5px;
+    border: none;
+    background: transparent;
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 12px;
+    line-height: 14px;
+    text-align: center;
+}
+.recognition_block .stars_dropdown .star span{
+    display: block;
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 12px;
+    line-height: 14px;
+    text-align: center;
+}
+.recognition_block .stars_dropdown .star button{
+    display: block;
+    width: 15px;
+    height:15px;
+    border: 1px solid #fff;
+    background: rgb(165, 165, 165);
+    border-radius: 50%;
+    padding: 2px;    
+}
+.recognition_block .stars_dropdown .star button:hover{
+    background:#34220D;
+}
+.recognition_block .stars_dropdown .star button span{
+    color: #fff;
+    margin-top: -2px;
+    margin-left: 0px;
+}
+.submitting_button button{
+    display: block;
+    height: 20px;
+    width: 20px;
+    margin-top: 30px;
+    border: 1px solid #fff;
+    background-color: #fff;
+    background: url('menu-img/update.png') no-repeat;
+}
+
+/* ////////////////// RECOGNITION ALLSTART BUTTON //////////////////*/
+.all-stars {
+    left: 80%;
+    position: relative;
+    width: 50px;
+    height: 50px;
+    aspect-ratio: 1/1;
+    cursor: pointer;
+    transition: transform 1s ease-in-out; /* Set the transition for the spin effect */
+}
+
+.all-stars.rotate {
+    transform: rotate(360deg); /* Rotate 360 degrees */
+}
+
+/* Verticals leafs */
+.all-stars :is(.pink-star, .orange-star){
+    position: absolute;
+    width: calc(28.5%);
+    height: calc(50%);
+    left: 50%;
+    transform: translateX(-50%);
+}
+.all-stars .pink-star {
+    top: 0; 
+}
+
+.all-stars .orange-star {
+    bottom: 0;
+}
+/* Horizontal leafs */
+.all-stars :is(.purple-star, .green-star, .yellow-star, .blue-star){
+    position: absolute;
+    width: 43%;
+    height: 25%;
+}
+/* Horizontal left leafs */
+.all-stars .purple-star {
+    top: 24.75%;
+    left: 6%;
+}
+
+.all-stars .green-star {
+    bottom: 24.75%;
+    left: 6%;
+}
+/* Horizontal right leafs */
+.all-stars .yellow-star {
+    top: 24.75%;
+    right: 6%;
+}
+
+.all-stars .blue-star {
+    bottom: 24.75%;
+    right: 6%;
+}
+
+/* Centered Ellipse */
+.all-stars .ellipse {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    width: calc(40%);
+    height: calc(40%);
+    top: calc(50%);
+    left: calc(50%);
+    transform: translate(-50%,-50%);
+    background-color: #ffffff;
+    border-radius: 50%;
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 16px;
+    letter-spacing: 0.01em;
+    color: #34220D;
+}
+  

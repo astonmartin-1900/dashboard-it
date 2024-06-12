@@ -1,0 +1,434 @@
+/* /////////////////////   GLOBAL CSS   \\\\\\\\\\\\\\\\\\\\\\ */
+
+a {text-decoration: none;}
+.nav-item:hover {
+    background-color: #f3f6f4;
+}
+.nav-link:focus, .nav-link:hover {
+    color: #63513D;
+}
+.nav-link {
+    color: #63513D;
+    font-weight: 400;
+    font-size: 13px;
+    padding: 0.2rem 1rem;
+    /* line-height: 28px; */
+}
+body {
+    background-color: lightgray;
+    user-select: none;
+    /* margin-left: 15%;*/
+}
+header {
+    width: 18%;
+    position: fixed;
+    height: 100%;
+    
+    padding: 0px 20px 0px 0px;
+    border-radius: 25px;
+}
+.red {          
+    padding: 20px 20px 0px 20px;
+}
+.blue {
+    padding: 20px 20px 0px 0px;
+}
+.leader-engager {
+    background-color: white;
+    padding: 30px 50px 50px 50px;
+    border-radius: 5px;
+    margin-top: 20px 20px;
+}
+.menu-space {
+    width: 100%;
+}
+.menu {
+    /* margin: 0 20px; */
+    background-color: white;
+    border-radius: 5px;
+    height: 100%;
+}
+.menu ul li {
+    margin: 3px 0 0 0;
+    /* height: 48px; */
+    border-radius: 4px;
+}
+ .menu ul li.active {
+    background-color: #63513D;
+    color: #fff;
+}
+.toggeled .menu ul li {
+    margin-left: 10px;
+    margin-right: 10px;
+}
+.active a span {
+    color: #fff;
+}
+.accordion-item {
+    border: none;
+    color: #63513D;
+    background-color: transparent;
+    
+}
+.accordion-button {
+    color: #63513D;
+    background-color: transparent;
+    text-transform: uppercase;
+    font-weight: 400;
+    font-size: 11px;
+    line-height: 13px;
+}
+.accordion-button:not(.collapsed) {
+    color: #63513D;
+    background-color: transparent;
+    text-transform: uppercase;
+    font-weight: 400;
+    font-size: 11px;
+    line-height: 13px;
+
+}
+.accordion-button:not(.collapsed) {
+    color: #63513D;
+    background-color: transparent;
+    text-transform: uppercase;
+    font-weight: 400;
+    font-size: 11px;
+    line-height: 13px;
+}
+.accordion-button:focus {
+    border: none;
+    box-shadow: none;
+}
+
+/* !!!!!!!!!!!!!!!HEADER!!!!!!!!!!!!!!!!!!!! */
+.logo-block {
+    padding: 20px 10px;
+    box-shadow: inset 0px -1px 0px rgba(52, 34, 13, 0.3);
+}
+.logo-text {
+    color: #63513D;
+    font-weight: 700;
+    font-size: 11px;
+    line-height: 14px;
+    text-align: center;
+    display: inline-block;
+    position: relative;
+    left: 20px;
+    top: 7px;
+}
+
+li {text-decoration: none;}
+
+.agenda, .attendance, .she, .actions, .improvments, .recognition, .notice_board, .settings  {
+    position:absolute;
+    padding-left: 55px;
+}
+.toggeled .agenda, .toggeled .attendance, .toggeled .she, .toggeled .actions, .toggeled .improvments, .toggeled .recognition, .toggeled .notice_board, .toggeled .settings 
+{
+    display: none;
+    padding-left: 0px;
+}
+.agenda_image::after, .attendance_image::after, .she_image::after, .actions_image::after, .improvments_image::after, .recognition_image::after, .notice_board_image::after, .settings_image::after  {
+    position:relative;
+    top: 2px;
+    left: 42px;
+}
+.toggeled .agenda_image::after,.toggeled .attendance_image::after, .toggeled .she_image::after, .toggeled .actions_image::after, .toggeled .improvments_image::after, .toggeled .recognition_image::after, .toggeled .notice_board_image::after, .toggeled .settings_image::after {
+    left: calc(50% - 8px);
+}
+.agenda_link:hover {
+    background-color: #63513D;
+}
+
+
+/* Edge Browser support */
+@supports (-ms-ime-align:auto) {
+        
+    .toggeled .agenda_image::after, 
+    .toggeled .attendance_image::after, 
+    .toggeled .she_image::after, 
+    .toggeled .actions_image::after, 
+    .toggeled .improvments_image::after, 
+    .toggeled .recognition_image::after, 
+    .toggeled .notice_board_image::after, 
+    .toggeled .settings_image::after {
+        left: 28%;
+    }  
+}
+
+/* Default images for menu */
+.agenda_image::after {
+    content:url("menu-img/agenda.ce2774e83d36.svg");
+}
+.attendance_image::after {
+    content:url("menu-img/attendance.020942107712.png");
+}
+.she_image::after {
+    content:url("menu-img/she.bb3c6ea6b130.png");
+}
+.actions_image::after {
+    content:url("menu-img/actions.5b366b728837.png");
+}
+.improvments_image::after {
+    content:url("menu-img/notice_board.4545f88466d1.png");
+}
+.recognition_image::after {
+    content:url("menu-img/recognition.058c85a6a9f7.png");
+}
+.notice_board_image::after {
+    content:url("menu-img/improvements.b6a196a8c385.svg");
+}
+.settings_image::after {
+    content:url("menu-img/settings.6b1c3a3fd3e5.png");
+}
+.toggeled .logo-block a .logo-text {
+    display: none;
+}
+header.toggeled {
+    width: 7%;
+}
+
+/* ACTIVE TAB IMAGE FOR MENU */
+.active .agenda_image::after {
+    content:url("menu-img/agenda_w.f03e3d1edbe2.svg");
+}
+.active .attendance_image::after {
+    content:url("menu-img/attendance_w.7c8944704b88.svg");
+}
+.active .she_image::after {
+    content:url("menu-img/she_w.d6e9a51fdfcb.svg");
+}
+.active .actions_image::after {
+    content:url("menu-img/actions_w.e6b2c1779598.svg");
+}
+.active .improvments_image::after {
+    content:url("menu-img/notice_board_w.f6abdb46e995.svg");
+}
+.active .recognition_image::after {
+    content:url("menu-img/recognition_w.f5c5e2984f27.svg");
+}
+.active .notice_board_image::after {
+    content:url("menu-img/improvements_w.61a65c399669.png");
+}
+.active .settings_image::after {
+    content:url("menu-img/settings_w.fe393fa0fecc.svg");
+}
+
+/* Accordion styles */
+.accordion-body {
+    padding: 1rem 0.25rem;
+    padding-top: 0;
+}
+.accordion-button span{
+    padding-left: 27px;
+}
+.accordion-button span{
+    padding-left: 27px;
+}
+.accordion-button:not(.collapsed)::after {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23212529'%3e%3cpath fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/%3e%3c/svg%3e");
+}
+
+/* Toggle button */
+.toggeled .menu .accordion-button span{
+    display: none;
+}
+.toggle-wrap {
+    position: fixed;
+    bottom: 1px;
+    padding-left: 3.2%;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    box-shadow: inset 0px 1px 0px rgb(52 34 13 / 30%);
+    width: 16.4%;
+    background-color: #fff;
+    margin-bottom: -1px;
+}
+.toggle-sb {
+    text-align: center;
+    width: 100%;
+    color: #63513D;
+    margin-top: 1rem;
+}
+.toggle-image {
+    content:url("menu-img/collapse.6a436d14adb8.svg");
+    position:relative;
+    top: 3px;
+    right: 15px;
+    border-radius: 50%;
+    transition-duration: 500ms;
+}
+.toggeled .toggle-image{
+    -webkit-transform: scaleX(-1);
+    transform: scaleX(-1);
+}
+.toggle-image:hover {
+    background-color: #f3f6f4;
+}
+.toggeled .toggle-sb {
+    display: none;
+} 
+.toggeled .toggle-wrap {
+    box-shadow: none;
+    width: 5.4%;
+}
+.toggeled .accordion-button::after {
+    margin: auto;
+}
+.toggeled .logo-block img {
+    /* padding-left: 9px; */
+    margin-left: calc(50% - 20px);
+}
+
+    /*////////////////////////////// CONTENT  \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\*/
+
+.page-title {
+    color: green;
+    font-size: 15px;
+    border-bottom: 2px solid green;
+    padding-bottom: 25px;
+    font-weight: 700;
+    margin-bottom: 16px;
+}
+.btns{
+    float: right;
+    /* width: 20%; */
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-end;
+    gap: 10px;
+}
+
+.btns img{
+    width: 1.2vw;
+    height: 1.2vw;
+    aspect-ratio: 1/1;
+}
+
+.register-buttons {
+    display: flex;
+    width: 47%;
+    flex-direction: row-reverse;
+    margin-left: -25px;
+}
+
+.cancel {
+    /* Cancel button code */
+    display: block;
+    border-radius: 4px;
+    box-shadow: none;
+    margin: 8px auto;
+    width: 200px;
+    height: 40px;
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 15px;
+    line-height: 22px;
+    text-align: center;
+    letter-spacing: 0.01em;
+
+    background: #FFFFFF !important;
+    color: #63513D !important;
+    border: 1px solid #34220D !important;
+}
+.cancel:hover{            
+    background:  #34220D !important;
+    color: #FFFFFF !important;
+}
+
+.submit{
+    /* Submit button code */
+    display: block;
+    border-radius: 4px;
+    box-shadow: none;
+    margin: 8px auto;
+    width: 200px;
+    height: 40px;
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 15px;
+    line-height: 22px;
+    text-align: center;
+    letter-spacing: 0.01em;
+
+    background: #63513D !important;
+    color: #FFFFFF !important;
+    border: 1px solid #F5F6F8 !important;
+}
+
+.submit:hover{
+    background:  #34220D !important;
+}
+.content-block {
+    background-color: white;
+    padding: 30px 50px 0px 50px;
+    border-radius: 5px;
+    margin-bottom: 20px;
+    /* height: 110%; */
+    padding-bottom: 30px;
+    min-height: 530px;
+}
+.toggeled_content {
+    width: 94.333333%;
+}
+
+/* HEADER TRICK SPACE WIDTH */
+.header_space {
+    width: 5.4%;
+}
+
+
+
+/* MEDIA QUERIES FOR 1400px + DISPLAYS SIZE */
+@media only screen and (min-width: 1400px) { 
+    .nav-link {
+        padding: 0.8rem 1rem;
+    }
+    .logo-block {
+        padding: 20px 20px;
+    }
+    /* .toggeled .logo-block img {
+        padding-left: 14px;
+    } */
+    /* .agenda_image::after, .attendance_image::after, .she_image::after, .actions_image::after, .improvments_image::after, .recognition_image::after, .notice_board_image::after, .settings_image::after {
+        left: 42px;
+    } */
+    /* .toggeled .agenda_image::after,.toggeled .attendance_image::after, .toggeled .she_image::after, .toggeled .actions_image::after, .toggeled .improvments_image::after, .toggeled .recognition_image::after, .toggeled .notice_board_image::after, .toggeled .settings_image::after {
+        left: 34%;
+    } */
+    .toggeled .toggle-image {
+        right: 14px;
+    }
+}
+
+@media only screen and (min-width: 1900px) { 
+    /* .toggeled .logo-block img, .logo-block {
+        padding-left: 0;
+    } */
+    /* .toggeled .agenda_image::after,.toggeled .attendance_image::after, .toggeled .she_image::after, .toggeled .actions_image::after, .toggeled .improvments_image::after, .toggeled .recognition_image::after, .toggeled .notice_board_image::after, .toggeled .settings_image::after {
+        left: 42%;
+    } */
+    /* .toggeled .toggle-image {
+        right: 14px;
+    } */
+    .logo-block {
+        padding: 20px 60px;
+    }
+    .nav-link {
+        font-size: 17px;
+    }
+    .toggle-wrap {
+        width: 17%;
+    }
+    .logo-text {
+        font-size: 14px;
+    }
+    .accordion-button, .accordion-button:not(.collapsed) {
+        font-size: 14px;
+    }
+    .btns {
+        /* width: 16%; */
+    }
+}

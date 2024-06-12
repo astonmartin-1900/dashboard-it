@@ -1,0 +1,101 @@
+{% load static %}
+    <tr class="headling">
+        <th>Date</th>
+        <th>Issue</th>
+        <th>Action</th>
+        <th>Solution</th>
+        <!-- <th class="filtering">Who?</th>
+        <th class="filtering">When?</th> -->
+        <th>Who?</th>
+        <th>When?</th>
+        <th>Status</th>
+    </tr>
+    {% for action in all_actions %}
+        <tr id="action_content">
+            <td class="date">{{action.creation_date|date:"d/M"}}</td>
+            <td class="action_title">
+                <a href="#" class="title_click" id="{{action.pk}}">{{action.issue_name}}</a>
+            </td>
+            <td class="action_text">{{action.action_text}}</td>
+            <td class="action_solution">{{action.solution_text}}</td>
+            <td class="members" id="members_for_{{action.pk}}">
+                {% if action.assigned_user.all.count == group_members %}
+                    <div class="img-block all">
+                        <img src="{% static '/img/all_users.svg' %}"" alt="All users">
+                    </div>
+                {% else %}
+                    <div class="img-block">
+                        {% for user in action.assigned_user.all %}
+                            <img alt="{{user.first_name}} {{user.last_name}}" 
+                                title="{{user.first_name}} {{user.last_name}}"
+                                src="{{user.user_image.url}}"> 
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            </td>
+            <td class="date">{{action.deadline_date|date:"d/M"}}</td>
+            <td class="status" id="{{action.pk}}">
+                {% if action.action_status == 'draft' %}
+                    <img alt="In progress" title="In progress" id="1" src="{% static '/img/in_progress.svg' %}">
+                {% elif action.action_status == 'completed' %}
+                    <img alt="Completed" title="Completed" id="2" src="{% static '/img/done.svg' %}">
+                {% else %}
+                    <img alt="Canceled" title="Canceled" id="3" src="{% static '/img/cancel.svg' %}">
+                {% endif %}
+            </td>
+        </tr>
+    {% endfor %}
+<script>
+    $('.title_click, .status').on("click", function(e) {
+        e.preventDefault();
+        $('.confirm').show();
+        $('.button-loader').hide();
+        // get the action id
+        var action_pk = $(this).attr("id");
+        // GET AJAX request
+        $.ajax({
+            type: 'GET',
+            url: '{% url "actions:action_main" %}',
+            data: {
+                action_pk: action_pk,
+                csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val(),
+                action: 'get_data'
+            },
+            success: function (response) {
+                var form = $("form#action_editing_form");
+                $(form)[0].reset();
+                $(form).attr("value", response.action_pk);
+                $(form).children('.checkboxes').children('.'+response.action_status+'').children('input').prop('checked', true);
+                $(form).children('.form_fields').children('.deadline').children('input').attr("value",response.deadline_date);
+                $(form).children('.form_fields').children('.action_form_title').children('input').attr("value",response.issue_name);
+                $(form).children('.form_fields').children('.action_form_action').children('input').attr("value",response.action_text);
+                $(form).children('.form_fields').children('.action_form_solution').children('input').attr("value",response.solution_text);
+                var assigned_user_list = response.assigned_users.split(',');
+                console.log(assigned_user_list);
+                $(form).find("input[type='checkbox']").prop('checked', false);
+                var checkbox_list = $(form).find("input[type='checkbox']")
+                console.log(checkbox_list);
+                // Market assigned users ass selected in form
+                for (let i=0; i<assigned_user_list.length;i++){
+                    console.log("User ID:"+ assigned_user_list[i]);
+                    // form.find("input[type='checkbox']#"+assigned_user_list[id]+"").prop('checked', true);
+                    for (let j=0; j<$(checkbox_list).length;j++){
+                        if ($(checkbox_list[j]).attr("value") == assigned_user_list[i]){
+                            $(checkbox_list[j]).prop('checked', true);
+                            console.log($(checkbox_list[j]).attr("value"));
+                        }    
+                    }  
+                }
+                
+                var element = document.getElementById("edit-popup");
+                element.classList.add("show");
+                document.body.style.overflowY = "hidden";
+            },
+            error : function(xhr,errmsg,err) {
+                $('#results').html("<div class='alert-box alert radius' data-alert>Oops! We have encountered an error: "+errmsg+
+                    " <a href='#' class='close'>&times;</a></div>"); // add the error to the dom
+                console.log(xhr.status + ": " + xhr.responseText); // provide a bit more info about the error to the console
+            }
+        })
+    })
+</script>

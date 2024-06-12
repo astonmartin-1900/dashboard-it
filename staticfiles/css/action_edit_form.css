@@ -1,0 +1,279 @@
+.form_container .action_form_editing form{
+    padding:  12px 24px;
+    padding-bottom: 12px;
+}
+.form_container{
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    position: absolute;
+    visibility: hidden;
+    display: none;
+    background-color: rgba(22,22,22,0.5); /* complimenting your modal colors */
+}
+
+.action_form_editing .checkbox-dropdown-list::-webkit-scrollbar {
+    width: 8px;  
+}
+.action_form_editing .checkbox-dropdown-list::-webkit-scrollbar-track{
+    background-color: #aaa;
+    border-radius: 5px;
+}
+.action_form_editing ::-webkit-scrollbar-thumb{
+    background-color: #34220D;
+    border-radius: 5px;
+    height: 20px;
+}
+
+.action_form_editing .checkbox-dropdown-list input[type="checkbox"]:checked + label{
+    background-color: #63513d;
+    color: #fff;
+}
+.action_form_editing .checkbox-dropdown-list input[type="checkbox"]{
+    display: block;
+    position: absolute;
+    opacity: 0;
+    width: 80%;
+    height: 30px;
+    margin: 5px 10px;
+}
+.action_form_editing .checkbox-dropdown-list img{
+    border-radius: 50%;
+    padding: 2px;
+    width: 30px;
+    height: 30px;
+}
+.action_form_editing .checkbox-dropdown {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    border: 1px solid #aaa;
+    padding: 10px;
+    position: relative;
+    margin: -23px 35%;
+    user-select: none;
+}
+
+/* Display CSS arrow to the right of the dropdown text */
+.action_form_editing .checkbox-dropdown:after {
+    content:'';
+    height: 0;
+    position: absolute;
+    width: 0;
+    border: 6px solid transparent;
+    border-left-color: #34220D;
+    top: 30%;
+    right: 1px;
+    margin-top: -2px;
+}
+
+/* Reverse the CSS arrow when the dropdown is active */
+.action_form_editing .checkbox-dropdown.is-active:after {
+    border-right-color: #34220D;
+    border-left-color: #fff;
+    margin-top: -2px;
+    right:9px;
+}
+
+.action_form_editing .checkbox-dropdown-list {
+    list-style: none;
+    width: 180px;
+    margin: 0;
+    padding: 0;
+    position: absolute;
+    top: -280px; /* align the dropdown right below the dropdown text */
+    border: inherit;
+    border: 1px solid #34220D;
+    border-radius: 5px;
+    left: 25px; /* align the dropdown to the left */
+    right: -1px; /* align the dropdown to the right */
+    opacity: 0; /* hide the dropdown */
+    
+    transition: opacity 0.4s ease-in-out;
+    height: 300px;
+    overflow: scroll;
+    overflow-x: hidden;
+    pointer-events: none; /* avoid mouse click events inside the dropdown */
+    background-color: #fff;
+}
+.action_form_editing .is-active .checkbox-dropdown-list {
+    opacity: 1; /* display the dropdown */
+    pointer-events: auto; /* make sure that the user still can select checkboxes */
+}
+.action_form_editing .checkbox-dropdown-list li{
+    padding: 1px;
+}
+.action_form_editing .checkbox-dropdown-list li label {
+    display: block;
+    border-bottom: 1px solid silver;
+    padding: 5px;
+    margin: 2px 5px;
+    border-radius: 5px;
+    transition: all 0.2s ease-out;
+}
+
+.action_form_editing .checkbox-dropdown-list li label:hover {
+    background-color: #F5F6F8;
+    color: #34220D;
+}
+
+
+.action_form_editing .form_fields input[type="text"] {
+    width: 100%;
+    height: 50px;
+    padding: 4px;
+    background: #F5F6F8;
+    border: 1px solid rgba(52, 34, 13, 0.3);
+    border-radius: 4px;
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 16px;
+}
+
+.action_form_editing .form_fields button{
+    display: block;
+    border: 1px solid #F5F6F8;
+    border-radius: 4px;
+    box-shadow: none;
+    margin: 8px auto;
+    background: #63513D;
+    width: 200px;
+    height: 40px;
+    /* text css */
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 15px;
+    line-height: 22px;
+    text-align: center;
+    letter-spacing: 0.01em;
+    color: #FFFFFF;
+}
+.action_form_editing .form_fields .cancel{     
+    display: flex;
+    justify-content: center; 
+    
+    border: 1px solid #F5F6F8;
+    border-radius: 4px;
+    box-shadow: none;
+    margin: 8px auto;
+    width: 200px;
+    height: 40px;
+
+    background: #FFFFFF;
+    color: #63513D;
+    padding: 5px;
+
+}
+.action_form_editing .form_fields .confirm:hover{
+    background:  #34220D;
+}
+.action_form_editing .form_fields .cancel:hover{            
+    border-color: #34220D;
+    color: #34220D;
+}
+.action_form_editing .form_fields{
+    display: block;
+    padding-top: 18px;
+    width: 100%;
+}
+.action_form_editing .form_fields .deadline{
+    display: inline-block;
+}
+.action_form_editing .form_fields #deadline_date{
+    display: inline-block;
+    margin-left: 20px;
+}
+
+.action_form_editing .checkboxes{
+    display: block;               
+}
+.action_form_editing .checkboxes .chebox_item{
+    display: inline-block;
+}
+.action_form_editing .checkboxes .chebox_item img{
+    width: 40px;
+    height: 40px;
+    background-color: #FFFFFF;
+}
+.action_form_editing input[type=radio]{
+    display: none;
+}
+.action_form_editing input[type=radio] + label {
+    border: 2px solid #FFFFFF;
+    border-radius: 3px;
+}
+.action_form_editing .done input[type=radio]:checked + label{
+    border-color: #2E8025;
+}
+.action_form_editing .in_progress input[type=radio]:checked + label{
+    border-color: #E8B100;
+}
+.action_form_editing .cancel input[type=radio]:checked + label{
+    border-color: #D64123;
+}
+.form_container{
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    position: absolute;
+    visibility: hidden;
+    display: none;
+    background-color: rgba(22,22,22,0.5); /* complimenting your modal colors */
+}
+
+.show {
+    visibility: visible;
+    display: block;
+}
+
+.form_container form{
+    padding:  12px 24px;
+    padding-bottom: 12px;
+}
+.action_form_editing {
+    display: block;
+    width: 30%;
+    /* #FFFFFF */
+    background: #FFFFFF;
+    /* Drop Shadow */
+    box-shadow: 0px 6px 18px rgba(0, 0, 0, 0.06);
+    border-radius: 4px;
+    /* Centering*/
+    position: relative;
+    margin: 4% auto;
+}
+.action_form_editing .form-title {
+    color: green;
+    font-size: 15px;
+    border-bottom: 2px solid green;
+    padding: 16px 24px 18px 24px;
+    font-weight: 700;
+}
+.action_form_editing .label{
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 15px;
+    line-height: 18px;
+    color: #D64123;
+    /* identical to box height */
+    letter-spacing: 0.01em;
+    text-transform: uppercase;
+}
+.action_form_editing .buttons{
+    padding-top: 50px;
+}
+.action_form_editing .user_images{
+    padding: 30px 0 0 0;
+}
+.action_form_editing .user_images img{
+    border-radius: 50%;
+    padding: 2px;
+    width: 50px;
+    height: 50px;
+}

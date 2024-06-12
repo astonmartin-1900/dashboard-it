@@ -1,0 +1,397 @@
+{% extends "base.html" %}
+{% load static %}
+{% block page-title %} | Improvements{% endblock page-title %}
+{% block styles %}
+    <link rel="stylesheet" type="text/css" href="{% static '/css/improvements.css' %}">
+{% endblock styles %}
+
+{% block content %}
+    <div>
+        <div class="btns">
+            <a href="#" style="float: right;" onclick="openForm()">
+                <img src="{% static 'img/add_btn.png' %}" alt="Add improvement"> 
+                <span class="add-task">Add Improvement</span>
+            </a>
+        </div>
+        <h2 class="page-title">Improvements</h2> 
+    </div>
+    <div class="improvement-list">
+        {% include 'improvement_listing.html' %}
+    </div>
+    <div class="form_container" id="popup">
+        <div class="improvement_form">
+            <h3 class="form-title">Adding an improvement</h3>
+            <form method="post" id="improvement_creation_form">
+                {% csrf_token %}
+                <fieldset class="checkboxes">
+                    <legend class="legend_label">Status</legend>
+                    <div class="chebox_item chebox_item_to_do">
+                        <input type="radio" id="to_do" name="status" value="to_do"
+                                checked>
+                        <label for="to_do">To do</label>
+                    </div>
+                
+                    <div class="chebox_item chebox_item_in_progress">
+                        <input type="radio" id="in_progress" name="status" value="in_progress">
+                        <label for="in_progress">In progress</label>
+                    </div>
+                
+                    <div class="chebox_item chebox_item_review">
+                        <input type="radio" id="review" name="status" value="review">
+                        <label for="review">Review</label>
+                    </div>
+                    
+                    <div class="chebox_item chebox_item_done">
+                        <input type="radio" id="done" name="status" value="done">
+                        <label for="done">Done</label>
+                    </div>
+                </fieldset>
+                <div class="form_fields">
+                    <div class="improvement_form_title">
+                        <legend class="legend_label">Title</legend>
+                        <input type="text" id="improvement_title" placeholder="Text" required>
+                    </div>
+                </div>
+                <div class="form_fields">
+                    <div class="improvement_description">
+                        <legend class="legend_label">Description</legend>
+                        <textarea id="improvement_description" placeholder="Describe improvement here..." required></textarea>
+                    </div>
+                </div>
+                <div class="form_fields">
+                    <fieldset class="improvement_form_perfromer"> 
+                        <legend class="legend_label">Performer</legend>
+                        <div class="checkbox-dropdown">
+                            <ul class="checkbox-dropdown-list">
+                                <li>
+                                    <input type="checkbox" id="all_users" value="all" name="assigned_user">
+                                    <label for="all_users">
+                                        <img alt="All users selector" title="All users selector" src="{% static '/img/default_user_image.png' %}">
+                                        <span class="performer_name">All</span>
+                                        <span class="performer_surname">Users</span>
+                                    </label>
+                                </li>
+                                {% for user in user_profile_list %}
+                                    {% if user.groups.first == request.user.groups.first %}
+                                    <li>
+                                        <input type="checkbox" id="{{user.pk}}" value="{{user.pk}}" name="assigned_user"/>
+                                        <label for="{{user.pk}}">
+                                            <img src="{{user.user_image.url}}"
+                                                 alt="{{user.first_name}} {{user.last_name}}"
+                                                 title="{{user.first_name}} {{user.last_name}}"   
+                                            >
+                                            <span class="performer_name">{{user.first_name}}</span>
+                                            <span class="performer_surname">{{user.last_name}}</span> 
+                                        </label>
+                                    </li>
+                                    {% endif %}
+                                {% endfor %}         
+                            </ul>
+                        </div>
+                    </fieldset>
+                </div>
+                <div class="form_fields timeline">
+                    <legend class="legend_label">Timeline</legend>
+                    <input type="date" id="start_date" class="start_date" required>
+                    <div class="arrow"> <img src="{% static 'img/arrow.png' %}" alt="from-to"></div>
+                    <input type="date" id="deadline_date" class="deadline_date" required>   
+                </div>
+                <div class="form_fields">
+                    <button class="button confirm" type="submit">Confirm</button>
+                    <button style="display: none;" class="button button-loader">{% include 'button-loader.html' %}</button>
+                    <button onclick="closeForm()" class="button cancel" type="reset">Cancel</button>  
+                </div>    
+            </form>        
+        </div>
+    </div>
+    <div class="form_container" id="edit-popup">
+        <div class="improvement_form_editing">
+            <h3 class="form-title">Editing an improvement</h3>
+            <form method="post" id="improvement_editing_form">
+                {% csrf_token %}
+                <fieldset class="checkboxes">
+                    <legend class="legend_label">Status</legend>
+                    <div class="chebox_item chebox_item_to_do">
+                        <input type="radio" id="edit_to_do" name="status" value="to_do"
+                                checked>
+                        <label for="edit_to_do">To do</label>
+                    </div>
+                
+                    <div class="chebox_item chebox_item_in_progress">
+                        <input type="radio" id="edit_in_progress" name="status" value="in_progress">
+                        <label for="edit_in_progress">In progress</label>
+                    </div>
+                
+                    <div class="chebox_item chebox_item_review">
+                        <input type="radio" id="edit_review" name="status" value="review">
+                        <label for="edit_review">Review</label>
+                    </div>
+                    
+                    <div class="chebox_item chebox_item_done">
+                        <input type="radio" id="edit_done" name="status" value="done">
+                        <label for="edit_done">Done</label>
+                    </div>
+                </fieldset>
+                <div class="form_fields">
+                    <div class="improvement_form_title">
+                        <legend class="legend_label">Title</legend>
+                        <input type="text" id="improvement_title" placeholder="Text" required>
+                    </div>
+                </div>
+                <div class="form_fields">
+                    <div class="improvement_description">
+                        <legend class="legend_label">Description</legend>
+                        <textarea id="improvement_description" value="" placeholder="Describe improvement here..." required></textarea>
+                    </div>
+                </div>
+                <div class="form_fields">
+                    <fieldset class="improvement_form_perfromer"> 
+                        <legend class="legend_label">Performer</legend>
+                        <div class="checkbox-dropdown">
+                            <ul class="checkbox-dropdown-list">
+                                {% for user in user_profile_list %}
+                                    {% if user.groups.first == request.user.groups.first %}
+                                    <li>
+                                        <input type="checkbox" id="{{user.pk}}" value="{{user.pk}}" name="assigned_user"/>
+                                        <label for="{{user.pk}}">
+                                            <img src="{{user.user_image.url}}"
+                                                 alt="{{user.first_name}} {{user.last_name}}"
+                                                 title="{{user.first_name}} {{user.last_name}}"   
+                                            >
+                                            <span class="performer_name">{{user.first_name}}</span>
+                                            <span class="performer_surname">{{user.last_name}}</span> 
+                                        </label>
+                                    </li>
+                                    {% endif %}
+                                {% endfor %}         
+                            </ul>
+                        </div>
+                    </fieldset>
+                </div>
+                <div class="form_fields timeline">
+                    <legend class="legend_label">Timeline</legend>
+                    <input type="date" id="start_date" class="start_date" required>
+                    <div class="arrow"> <img src="{% static 'img/arrow.png' %}" alt="from-to"></div>
+                    <input type="date" id="deadline_date" class="deadline_date" required>   
+                </div>
+                <div class="form_fields">
+                    <button class="button confirm" type="submit">Confirm</button>
+                    <button style="display: none;" class="button button-loader">{% include 'button-loader.html' %}</button>
+                    <button onclick="closeEditingForm()" class="button cancel" type="reset">Cancel</button>  
+                </div>    
+            </form>        
+        </div>
+    </div>
+    <script>
+        $(".checkbox-dropdown").click(function () {
+            $(this).toggleClass("is-active");
+        });
+
+        $(".checkbox-dropdown ul").click(function(e) {
+            e.stopPropagation();
+        });
+        function openForm() {
+            var element = document.getElementById("popup");
+            element.classList.add("show");
+            document.body.style.overflowY = "hidden";
+            $('.confirm').show();
+        }
+        function closeForm() {
+            var element = document.getElementById("popup");
+            element.classList.remove("show");
+            document.body.style.overflowY = "scroll";
+        }
+        function closeEditingForm() {
+            var element = document.getElementById("edit-popup");
+            element.classList.remove("show");
+            document.body.style.overflowY = "scroll";
+        }
+        $("input[type='checkbox'][name='assigned_user']").click(function () {
+            if ($("input[type='checkbox']#all_users:checked") && $(this).attr("id")!='all_users'){
+                $("input[type='checkbox']#all_users").prop('checked',false);
+            }
+        });
+        $("#all_users").click(function () {
+            var checkboxes = document.getElementsByName('assigned_user');
+            // loop over them all
+            if (checkboxes[0].checked == false){
+                for (var i=0; i<checkboxes.length; i++) {
+                    checkboxes[i].checked = false;
+                }
+            }
+            else{
+                for (var i=0; i<checkboxes.length; i++) {
+                    checkboxes[i].checked = true;
+                }
+            }
+        });
+        $(document).on('submit', '#improvement_creation_form',function(e){          
+            e.preventDefault();
+            $('.confirm').hide();
+            $('.button-loader').show();
+            var date = new Date($(this).children('.form_fields').children('.start_date').val());
+            var day = date.getDate();
+            var month = date.getMonth() + 1;
+            var year = date.getFullYear();
+
+            start_date = [year, month, day ].join('-');
+            var date = new Date($(this).children('.form_fields').children('.deadline_date').val());
+            var day = date.getDate();
+            var month = date.getMonth() + 1;
+            var year = date.getFullYear();
+
+            deadline_date = [year, month, day ].join('-');
+            
+            let checkboxes= $(this).find("input[type='checkbox']")
+            var checkboxesChecked = [];
+            for (var i=0; i<checkboxes.length; i++) {
+                // And stick the checked ones onto an array...
+                if (checkboxes[i].checked == true){
+                    if(checkboxes[i].value != 'all'){
+                        checkboxesChecked.push(checkboxes[i].value);
+                    }
+                }
+            }
+            let assigned_user = "";
+
+            if(checkboxesChecked.length === 0){
+                alert("Please select at least one assigned user");
+                $('.confirm').show();
+                $('.button-loader').hide();
+                return false;
+            } 
+            else {
+                assigned_user = checkboxesChecked.join();
+            }
+
+
+            $.ajax({
+                type:'POST',
+                url:"{% url 'improvements:improvements_main' %}",
+                data:{
+                    title : $(this).children('.form_fields').children('.improvement_form_title').children('input').val(),
+                    description: $(this).children('.form_fields').children('.improvement_description').children('textarea').val(),
+                    status: $(this).find("input[type='radio'][name='status']:checked").val(),
+                    assigned_users: assigned_user,
+                    start_date: start_date,
+                    deadline_date: deadline_date,
+                    csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val(),
+                    action: 'add'
+                },
+                success:function(json){
+                    $('.improvement-list').html(json);
+                    document.getElementById("improvement_creation_form").reset();
+                    document.getElementById("popup").classList.remove('show');
+                    document.body.style.overflowY = "scroll";  
+                    $('.confirm').show();
+                    $('.button-loader').hide();
+                },
+                error : function(xhr,errmsg,err) {
+                    $('#results').html("<div class='alert-box alert radius' data-alert>Oops! We have encountered an error: "+errmsg+
+                        " <a href='#' class='close'>&times;</a></div>"); // add the error to the dom
+                    console.log(xhr.status + ": " + xhr.responseText); // provide a bit more info about the error to the console
+                }
+            });
+        });
+        $(document).on('submit', '#improvement_editing_form',function(e){          
+            e.preventDefault();
+            $('.confirm').hide();
+            $('.button-loader').show();
+
+            var date = new Date($(this).children('.form_fields').children('.start_date').val());
+            var day = date.getDate();
+            var month = date.getMonth() + 1;
+            var year = date.getFullYear();
+
+            start_date = [year, month, day ].join('-');
+            var date = new Date($(this).children('.form_fields').children('.deadline_date').val());
+            var day = date.getDate();
+            var month = date.getMonth() + 1;
+            var year = date.getFullYear();
+
+            deadline_date = [year, month, day ].join('-');
+
+            // let checkboxes= $(this).find("input[type='checkbox']")
+            // var checkboxesChecked = [];
+            // for (var i=0; i<checkboxes.length; i++) {
+            //     // And stick the checked ones onto an array...
+            //     if (checkboxes[i].checked == true){
+            //         if(checkboxes[i].value != 'all'){
+            //             checkboxesChecked.push(checkboxes[i].value);
+            //         }
+            //     }
+            // }
+            // let assigned_user = "";
+
+            // if(checkboxesChecked.length === 0){
+            //     alert("Please select assigned user");
+            //     $('.confirm').show();
+            //     $('.button-loader').hide();
+            //     return false;
+            // } 
+            // else {
+            //     assigned_user = checkboxesChecked.join();
+            // }
+
+            
+            let checkboxes= $(this).find("input[type='checkbox']")
+            var checkboxesChecked = [];
+            var checkboxesUnchecked = [];
+
+            for (var i=0; i<checkboxes.length; i++) {
+                // And stick the checked ones onto an array...
+                if (checkboxes[i].checked == false) {
+                    if (checkboxes[i].id != 'all_users'){
+                        checkboxesUnchecked.push(checkboxes[i].value);
+                    }
+                } else
+                if (checkboxes[i].checked == true){
+                    if (checkboxes[i].id != 'all_users'){
+                        checkboxesChecked.push(checkboxes[i].value);
+                    }  
+                }
+            }
+            if(checkboxesChecked.length === 0){
+                alert("Please select at least one assigned user");
+                $('.confirm').show();
+                $('.button-loader').hide();
+                return false;
+            } 
+            else {
+                assigned_user = checkboxesChecked.join();
+            }
+
+            let unassigned_user = checkboxesUnchecked.join();
+
+            $.ajax({
+                type:'POST',
+                url:"{% url 'improvements:improvements_main' %}",
+                data:{
+                    improvement_pk: $(this).attr('value'),
+                    title : $(this).children('.form_fields').children('.improvement_form_title').children('input').val(),
+                    description: $(this).children('.form_fields').children('.improvement_description').children('textarea').val(),
+                    status: $(this).find("input[type='radio'][name='status']:checked").val(),
+                    assigned_users: assigned_user,
+                    unassigned_users : unassigned_user,
+                    start_date: start_date,
+                    deadline_date: deadline_date,
+                    csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val(),
+                    action: 'edit'
+                },
+                success:function(json){
+                    $('.improvement-list').html(json);
+                    document.getElementById("improvement_editing_form").reset();
+                    document.getElementById("edit-popup").classList.remove('show');
+                    document.body.style.overflowY = "scroll";
+                    $('.confirm').show();
+                    $('.button-loader').hide();
+                },
+                error : function(xhr,errmsg,err) {
+                    $('#results').html("<div class='alert-box alert radius' data-alert>Oops! We have encountered an error: "+errmsg+
+                        " <a href='#' class='close'>&times;</a></div>"); // add the error to the dom
+                    console.log(xhr.status + ": " + xhr.responseText); // provide a bit more info about the error to the console
+                }
+            });
+        });
+    </script>
+{% endblock content %}

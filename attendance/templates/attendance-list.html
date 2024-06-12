@@ -1,0 +1,44 @@
+<table class="carousel">
+    <tbody class="carouselContainer">
+        <tr >
+            {% for week in week_list%}
+                <td class="slides"><span>Week {{week.week_number}}</span><span><br>{{week.start_date|date:"m.d"}} - {{week.end_date|date:"m.d"}}</br></span></td>   
+            {% endfor%} 
+        </tr>
+        {% for user in users%}     
+            <tr id="{{user.id}}">
+                {% for week in week_list%}
+                    <td class="slides" id="week.week_number">
+                        {% for week_role in week_roles%}
+                            {% if week_role.wor_leader.pk == user.pk and week_role.week_id.week_number == week.week_number  %}
+                                <div class="
+                                {% for attendance in attendances%}
+                                    {% if user.pk == attendance.person.pk and week.week_number == attendance.date.week_number %}
+                                        {{attendance.user_status}}
+                                    {% endif %}
+                                {% endfor%}   
+                                leader"><span></span></div>
+                            {% elif week_role.wor_engager.pk == user.pk and week_role.week_id.week_number == week.week_number  %}
+                                <div class="
+                                {% for attendance in attendances%}
+                                    {% if user.pk == attendance.person.pk and week.week_number == attendance.date.week_number %}
+                                        {{attendance.user_status}}
+                                    {% endif %}
+                                {% endfor%} 
+                                engager"><span></span></div>
+                            {% elif week_role.week_id.week_number == week.week_number%}
+                                <div class="
+                                {% for attendance in attendances%}
+                                    {% if user.pk == attendance.person.pk and week.week_number == attendance.date.week_number %}
+                                        {{attendance.user_status}}
+                                    {% endif %}
+                                {% endfor%}             
+                                "><span></span></div>
+                            {% endif %}
+                        {% endfor%} 
+                    </td>
+                {% endfor%}
+            </tr>        
+        {% endfor%}                   
+    </tbody>
+</table>

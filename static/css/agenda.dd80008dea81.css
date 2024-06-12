@@ -1,0 +1,296 @@
+.content-block{
+    background-color: lightgray;
+    padding: 0px;
+    margin: 0;
+}
+.agenda_content{
+    background-color: white;
+    display: block;
+    float: left;
+    width: 63%;
+    padding: 18px 18px 8px 18px;
+    border-radius: 5px;
+    margin-right: 8px;
+}
+.facilitators{
+    background-color: white;
+    display: block;
+    float: right;
+    width: 36%;
+    padding: 18px 18px;
+    border-radius: 5px;
+}
+.next_week{
+    margin-top: 10px;
+    /* zoom: 0.75; */
+}
+.agenda_body{
+    width: 100%;
+    height: 458px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+.block_title{
+    display: block;
+    width: 100%;
+    /* Fonts */
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 16px;
+    /* identical to box height */
+    text-align: left;
+    letter-spacing: 0.01em;
+    text-transform: uppercase;
+    /* #D64123 */
+    color: #D64123;
+}
+.agenda_title{
+    text-align: center;
+    font-size: 18px;
+}
+.agenda_description{
+    width: 100%;
+    display: block;
+}
+.agenda_description .description_row, .agenda_description .description_headling_row{
+    width: 100%;
+    display: flex;
+    align-content: center;
+    justify-content: center;
+    align-items: center;
+    background-color: #F5F6F8;
+    border: 1px solid #F5F6F8;
+    border-radius: 4px;
+    padding: 12px 16px;
+    margin-bottom: 8px;
+    /* Fonts */
+
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 16px;
+    /* identical to box height */
+    text-align: center;
+    /* #63513D */
+    color: #63513D;
+}
+.agenda_description .description_headling_row{                                                    
+    /* Text */
+    border: 1px solid #FFF;
+    background-color: #FFF;
+    margin-bottom: 8px;
+    color: #34220D;
+    padding: 0px;
+    opacity: 0.8;
+}
+.agenda_description .description_headling_row .description_headling{
+    display: inline-block;
+    text-align: center;
+}
+.agenda_description .description_headling_row .description_headling:first-child{
+    width: 38%;
+}
+.agenda_description .description_headling_row .description_headling:last-child{
+    width: 58%;
+}
+.agenda_description .description_row .description_item:first-child{
+    width: 40%;
+    /* text-align: left; */
+}
+.agenda_description .description_row .description_item:last-child{
+    width: 60%;
+    text-align: left;
+}
+.agenda_description .description_row .description_item{
+    display: inline-block;
+}
+.user_description{
+    display: block;
+    width: 100%;
+    height: 100px;
+    margin-top: -10px;
+}
+.user_description .user_information_block{
+    display: block;
+    width: 100%;
+}
+.user_description .user_information_block .user_image{
+    display: block;
+    margin-top: 0px;
+    width: 35%;
+    float: left;
+}
+.user_description .user_information_block .user_image img {
+    display: block;
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    margin: 0 auto;
+}
+.user_description .user_information_block .user_information{
+    display: block;
+    width: 65%;
+    float: right;
+    border-bottom: 1px solid #34220D4D;
+    padding: 5px 0px;
+}
+.user_description .user_information_block .user_information .user_name{
+    display: block;
+    width: 100%;
+    /* Sierra Ferguson */
+    padding: 0px 0px 8px;
+
+    font-family: 'Roboto';
+    font-style: medium;
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 18px;
+    /* identical to box height */
+
+    /* #A50064 */
+    color: #A50064;
+}
+.user_description .user_information_block .user_information .user_position{
+    width: 100%;
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 14px;
+    /* identical to box height */
+    letter-spacing: 0.01em;
+
+    /* Text */
+    color: #34220D;
+    opacity: 0.5;
+}
+.user_description  .user_personal_data_block{
+    display: block;
+    width: 100%;
+}
+.user_description  .user_personal_data_block .user_personal_data{
+    position: relative;
+    float: right;
+    text-align: left;
+    font-size: 12px;
+    width: 100%;
+    padding-left: 35%;
+    white-space: nowrap;
+    padding-top: 5px;
+}
+.user_description  .user_personal_data_block .user_personal_data .label{
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 12px;
+    letter-spacing: 0.01em;
+    /* Text */
+    color: #34220D;
+    opacity: 0.5;
+}
+.user_description  .user_personal_data_block .user_personal_data .data{
+    display: block;
+    margin-bottom: 5px;
+    width: 200px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 12px;
+    /* identical to box height */
+    letter-spacing: 0.01em;
+    /* Text */
+    color: #34220D;
+}
+.user_description  .user_personal_data_block .user_personal_data::before {
+    display: block;
+    content: "";
+    background: url("website-icons/copy.5e9093055731.png") no-repeat;
+    background-size: 12px;
+    position: absolute;
+    z-index: 5;
+    top: 6px;
+    right: 0;
+    width: 12px;
+    height: 12px;
+    background-color: #fff;
+    outline: #fff 3px solid;
+}
+.user_description  .user_personal_data_block .user_personal_data.copied::before {
+    display: block;
+    content: "";
+    background: url("website-icons/copied.1f9cf7c83a86.png") no-repeat;
+    background-size: 16px;
+    position: absolute;
+    z-index: 5;
+    top: 6px;
+    right: 0;
+    width: 16px;
+    height: 16px;
+    background-color: #fff;
+    outline: #fff 3px solid;
+
+}
+.next_week_wor_leader{
+    display: block;
+    width: 49%;
+    float: left;
+    border-right: 1px solid #34220D4D;
+    text-align: center;
+}
+.next_week_wor_engager{
+    display: block;
+    width: 49%;
+    float: right;
+    text-align: center;
+}
+.next_week_wor_leader .user_information_block img, .next_week_wor_engager .user_information_block img{
+    display: block;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    margin: 0 auto;
+}
+.next_week_wor_leader .user_information_block .user_information, 
+.next_week_wor_engager .user_information_block .user_information{
+    padding-top: 3px;
+}
+.user_information_block .user_information .first_name , .last_name{
+    font-family: 'Roboto';
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #34220D;
+}
+.user_information_block .user_information .first_name{
+    font-style: normal;
+    font-weight: 500;
+    font-size: 10px;
+    line-height: 10px;
+    /* identical to box height */
+    letter-spacing: 0.01em;
+}
+.user_information_block .user_information .last_name{
+    font-style: medium;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 14px;
+    letter-spacing: 0.01em;
+}
+.next_week .page-title {
+    font-size: 12px;
+    border-bottom: 2*px solid green;
+    padding-bottom: 19px;
+    font-weight: 700;
+    margin-bottom: 12px;
+}
+.next_week .block_title{
+    font-size: 12px;
+    line-height: 12px;
+    text-align: center;
+}

@@ -1,0 +1,95 @@
+{% load static %}
+<div class="facilitators">
+    <div class="more-settings">
+        {% if not wor_leader_peresent %}
+            {% if request.user == week_role.wor_engager %}
+                <img class="more-settings-icon" src="{% static '/img/settings.png' %}">
+                <div class="settings-dropdown">
+                    <ul class="setting-list">
+                        {% csrf_token %}
+                        <li class="setting-item meeting-start"><a href="">Become WOR leader</a> </li>
+                    </ul>
+                </div>
+            {% elif not wor_engager_peresent %}
+                <img class="more-settings-icon" src="{% static '/img/settings.png' %}">
+                <div class="settings-dropdown">
+                    <ul class="setting-list">
+                        {% csrf_token %}
+                        <li class="setting-item meeting-start"><a href="">Become WOR leader</a> </li>
+                    </ul>
+                </div>
+            {% endif %}
+        {% endif %}
+    </div>
+    <h2 class="page-title">This week's facilitator</h2>
+    <!-- <div class="user_description" style="margin-bottom: 56px;">
+        <div class="user_information_block">
+            <div class="user_image">
+                <img src="{{week_role.wor_leader.user_image.url}}" alt="">
+            </div>
+            <div class="user_information">
+                <h3 class="block_title">WOR LEADER</h3>
+                <span class="user_name">{{week_role.wor_leader.first_name}} {{week_role.wor_leader.last_name}}</span>
+                <span class="user_position">{{week_role.wor_leader.user_position}}</span> 
+            </div>
+        </div>
+        <div class="user_personal_data_block">
+            <div class="user_personal_data">
+                <span class="label">Email:</span>
+                <span class="data">{{week_role.wor_leader.email}}</span>
+            </div>
+        </div>
+    </div>
+    <div class="user_description">
+        <div class="user_information_block">
+            <div class="user_image">
+                <img src="{{week_role.wor_engager.user_image.url}}" alt="">
+            </div>
+            <div class="user_information">
+                <h3 class="block_title block_title_engager">COMUNICATION ENGAGER</h3>
+                <span class="user_name">{{week_role.wor_engager.first_name}} {{week_role.wor_engager.last_name}}</span>
+                <span class="user_position">{{week_role.wor_engager.user_position}}</span> 
+            </div>
+        </div>
+        <div class="user_personal_data_block">
+            <div class="user_personal_data">
+                <span class="label">Email:</span>
+                <span class="data">{{week_role.wor_engager.email}}</span>
+            </div>
+        </div>
+    </div> -->
+    {% include 'week_facilitators.html' %}
+</div>
+{% for role in next_week_roles%}
+    <div class="facilitators next_week">
+        <h2 class="page-title">Next week's coordinator</h2>
+        <div class="next_week_wor_leader">
+            <h3 class="block_title block_title_engager">WOR LEADER</h3>
+            <div class="user_information_block">
+                <div class="user_image">
+                    <img src="{{role.wor_leader.user_image.url}}" 
+                            alt="{{role.wor_leader.first_name}} {{role.wor_leader.last_name}}"
+                            title="{{role.wor_leader.first_name}} {{role.wor_leader.last_name}}">
+                </div>
+                <div class="user_information">
+                    <span class="first_name">{{role.wor_leader.first_name}}</span>
+                    <span class="last_name">{{role.wor_leader.last_name}}</span> 
+                </div>
+            </div>
+        </div>
+        <div class="next_week_wor_engager">
+            <h3 class="block_title block_title_engager">COMUNICATION ENGAGER</h3>
+            <div class="user_information_block">
+                <div class="user_image">
+                    <img src="{{role.wor_engager.user_image.url}}" 
+                            alt="{{role.wor_engager.first_name}} {{role.wor_engager.last_name}}"
+                            title="{{role.wor_engager.first_name}} {{role.wor_engager.last_name}}">
+                </div>
+                <div class="user_information">  
+                    <span class="first_name">{{role.wor_engager.first_name}}</span>
+                    <span class="last_name">{{role.wor_engager.last_name}}</span> 
+                </div>
+            </div>
+        </div>
+    </div>
+{% endfor %}

@@ -1,0 +1,66 @@
+{% for role in current_week_roles%}
+    <div class="user_description" style="margin-bottom: 56px;">
+        <div class="user_information_block">
+            <div class="user_image">
+                <img alt="{{role.wor_leader.first_name}} {{role.wor_leader.last_name}}" 
+                        title="{{role.wor_leader.first_name}} {{role.wor_leader.last_name}}" 
+                        src="{{role.wor_leader.user_image.url}}">
+            </div>
+            <div class="user_information">
+                <h3 class="block_title">WOR LEADER</h3>
+                <span class="user_name">{{role.wor_leader.first_name}} {{role.wor_leader.last_name}}</span>
+            <span class="user_position">{{role.wor_leader.user_position}}</span> 
+            </div>
+        </div>
+        <div class="user_personal_data_block">
+            <div class="user_personal_data" title="Copy to clipboard">
+                <span class="data">Email: <span class="label">{{role.wor_leader.email}}</span></span>
+            </div>
+        </div>
+    </div>
+    <div class="user_description">
+        <div class="user_information_block">
+            <div class="user_image">
+                <img src="{{role.wor_engager.user_image.url}}" 
+                        alt="{{role.wor_engager.first_name}} {{role.wor_engager.last_name}}"
+                        title="{{role.wor_engager.first_name}} {{role.wor_engager.last_name}}">
+            </div>
+            <div class="user_information">
+                <h3 class="block_title block_title_engager">COMUNICATION ENGAGER</h3>
+                <span class="user_name">{{role.wor_engager.first_name}} {{role.wor_engager.last_name}}</span>
+                <span class="user_position">{{role.wor_engager.user_position}}</span> 
+            </div>
+        </div>
+        <div class="user_personal_data_block">
+            <div class="user_personal_data" title="Copy to clipboard">
+                <span class="data" id ="get_mail">Email: <span class="label">{{role.wor_engager.email}}</span></span>
+            </div>
+        </div>
+    </div>
+{% endfor %}
+<script>
+    /////////////// Copy mail ///////////////
+document.addEventListener('DOMContentLoaded', function() {
+    document.addEventListener('click', function(event) {
+        if (event.target && event.target.classList.contains('user_personal_data')) {
+            const labelSpan = event.target.querySelector('.label');
+
+            if (labelSpan) {
+                const textToCopy = labelSpan.textContent.trim();
+                const textarea = document.createElement('textarea');
+                textarea.value = textToCopy;
+                document.body.appendChild(textarea);
+                textarea.select();
+                document.execCommand('copy');
+                document.body.removeChild(textarea);
+                event.target.classList.add('copied');
+
+                setTimeout(function() {
+                    event.target.classList.remove('copied');
+                }, 5000);
+            }
+        }
+    });
+});
+
+</script>

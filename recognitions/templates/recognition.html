@@ -1,0 +1,184 @@
+{% extends "base.html" %}
+{% load static %}
+{% block page-title %} | Recognition{% endblock page-title %}
+{% block styles %}
+    <link rel="stylesheet" href="">
+    <link rel="stylesheet" type="text/css" href="{% static '/css/recognitions.css' %}">
+{% endblock styles %}
+{% block content %}
+    <div>
+        <h2 class="page-title">Recognition</h2>
+        <div class="all_stars">
+            <div class="stars initiative">
+                <p class="">Initiative</p>
+            </div>
+            <div class="stars ube">
+                <p class="">Understand business environment</p>
+            </div>
+            <div class="stars pwyp">
+                <p class="">Practice what you preach</p>
+            </div>
+            <div class="stars resut_focus">
+                <p class="">Result focus</p>
+            </div>
+            <div class="stars know_yourself">
+                <p class="">Know Yourself</p>
+            </div>
+            <div class="stars proactive_cooperation">
+                <p class="">Proactive Cooperation</p>
+            </div>
+        </div>
+        <div class="sorting">
+            <span class="sort_by">Sort by: </span>
+            <div class="dropdown">
+                <button class="dropdown-select" type="button">
+                    Filter by
+                </button>
+                <form method="get" class="dropdown-select-menu">
+                    {% csrf_token %}
+                    <button class="dropdown-select-item filter_click" value="total_stars" type="button">
+                        Total stars
+                    </button>
+                    <button class="dropdown-select-item filter_click" value="initiative_value" type="button">
+                        <p class="initiative">Initiative</p>
+                    </button>
+                    <button class="dropdown-select-item filter_click" value="understand_value" type="button">
+                        <p class="ube">Understand business..</p>
+                    </button>
+                    <button class="dropdown-select-item filter_click" value="practice_value" type="button">
+                        <p class="pwyp">Practice what you pre..</p>
+                    </button>
+                    <button class="dropdown-select-item filter_click" value="result_focus_value" type="button">
+                        <p class="resut_focus">Resut focus</p>
+                    </button>
+                    <button class="dropdown-select-item filter_click" value="know_yourself_value" type="button">
+                        <p class="know_yourself">Know Yourself</p>
+                    </button>
+                    <button class="dropdown-select-item filter_click" value="cooperation_value" type="button">
+                        <p class="proactive_cooperation">Proactive Cooperation</p>
+                    </button>
+                </form>
+            </div> 
+        </div>
+    </div>     
+    <div class="recognition_block">
+        {% include 'recognition_filter.html' %}
+    </div>   
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>     
+    <script>
+        //Providing filter for recongitions
+        $('.filter_click').click(function(e){
+            e.preventDefault();
+            $.ajax({
+                type: "POST",
+                url: '{% url "recognitions:recognition_page" %}',
+                data: {
+                    'filter_id': $(this).val(),
+                    'operation':'filter_by',
+                    'csrfmiddlewaretoken': $('input[name=csrfmiddlewaretoken]').val(),
+                },
+                success: function(response) {
+                    $(".dropdown-select-menu").toggleClass("show");
+                    $('.recognition_block').html(response);
+                },
+                error : function(xhr,errmsg,err) {
+                    $('#results').html("<div class='alert-box alert radius' data-alert>Oops! We have encountered an error: "+errmsg+
+                        " <a href='#' class='close'>&times;</a></div>"); // add the error to the dom
+                    console.log(xhr.status + ": " + xhr.responseText); // provide a bit more info about the error to the console
+                }
+
+            });
+        })
+
+        // Updating recognition via form
+        $(document).on('submit', '.stars_dropdown',function(e){
+            e.preventDefault();
+            this_initiative_input = $(this).children().children().children('input[name="initiative"]');
+            $.ajax({
+                type:'POST',
+                url:'{% url "recognitions:recognition_page" %}',
+                data:{
+                    recognition_id : $(this).attr("id"),
+                    initiative_value : $(this).children().children().children('input[name="initiative"]').val() ,
+                    understand_value : $(this).children().children().children('input[name="ube"]').val(), 
+                    practice_value : $(this).children().children().children('input[name="pwyp"]').val(),
+                    result_focus_value : $(this).children().children().children('input[name="resut_focus"]').val(),
+                    know_yourself_value : $(this).children().children().children('input[name="know_yourself"]').val(),
+                    cooperation_value : $(this).children().children().children('input[name="proactive_cooperation"]').val(),
+
+                    csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val(),
+                    action: 'update_recognition'
+                },
+                success:function(updated){
+                    // recognition elements updating
+                    $("span[name=initiative_"+updated.recognition_id+"]").html(updated.initiative_value);
+                    $("span[name=ube_"+updated.recognition_id+"]").html(updated.understand_value);
+                    $("span[name=pwyp_"+updated.recognition_id+"]").html(updated.practice_value);
+                    $("span[name=resut_focus_"+updated.recognition_id+"]").html(updated.result_focus_value);
+                    $("span[name=know_yourself_"+updated.recognition_id+"]").html(updated.know_yourself_value);
+                    $("span[name=proactive_cooperation_"+updated.recognition_id+"]").html(updated.cooperation_value);
+                    
+                    // total_stars updating
+                    total_stars_name = "total_stars_"+updated.recognition_id
+                    $("span[name="+total_stars_name+"]").html(updated.total_stars);
+
+                    // form hiding
+                    $("form[name=form_"+updated.recognition_id+"]").toggleClass('show_form');
+                },
+                error : function(xhr,errmsg,err) {
+                    $('#results').html("<div class='alert-box alert radius' data-alert>Oops! We have encountered an error: "+errmsg+
+                        " <a href='#' class='close'>&times;</a></div>"); // add the error to the dom
+                    console.log(xhr.status + ": " + xhr.responseText); // provide a bit more info about the error to the console
+                }
+            })
+        });
+        $(".dropdown-select").click(function () {
+            $(".dropdown-select-menu").toggleClass("show");
+        });
+
+        function show_form(user_identificator){
+            let forms = document.getElementsByTagName('form');
+            for (let i = 0; i < forms.length; i++) {
+                if (forms[i].id == user_identificator){
+                    if (forms[i].classList.contains('show_form')){
+                        forms[i].classList.remove('show_form');
+                    } 
+                    else{
+                        for (let j = 0; j < forms.length; j++) {
+                            if (forms[j].classList.contains('show_form')){       
+                                forms[j].classList.remove('show_form');
+                            } 
+                        }
+                        forms[i].classList.add('show_form');
+                    }
+                }   
+            }
+        }
+
+        function add(user_id, type_of_star){
+            let elements = document.getElementsByTagName('input');
+            let parent_form = document.getElementById(user_id);
+            for (let i = 0; i < elements.length; i++) {
+                if (elements[i].name == type_of_star){
+                    if (parent_form.id == elements[i].parentElement.parentElement.parentElement.id){
+                        elements[i].value= parseInt(elements[i].value)+1;
+                    }
+                }   
+            }
+        }
+        function remove(user_id, type_of_star){
+            let elements = document.getElementsByTagName('input');
+            let parent_form = document.getElementById(user_id);
+            for (let i = 0; i < elements.length; i++) {
+                if (elements[i].name == type_of_star){
+                    if (parent_form.id == elements[i].parentElement.parentElement.parentElement.id){
+                        
+                        if (elements[i].value>0){
+                            elements[i].value= parseInt(elements[i].value)-1;
+                        }  
+                    }
+                }   
+            }
+        }
+    </script>
+{% endblock content %}

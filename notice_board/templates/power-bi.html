@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% load static %}
+{% block page-title %} | Notice Board{% endblock page-title %}
+{% block styles %}
+    <link rel="stylesheet" type="text/css" href="{% static '/css/she.css' %}">
+{% endblock styles %}
+{% block content %}
+<style>
+    div {
+        width: 100%;
+    }
+    iframe{
+        height: calc(100% - 50px);
+        /* aspect-ratio: 16/9; */
+    }
+</style>
+<div>
+    <h2 class="page-title">Measures: Review previous week performance (CATS, Kronos, etc)</h2>
+    <iframe title="IMS CATS" width="100%" height="50%" src="https://app.powerbi.com/reportEmbed?reportId=181e102e-b90f-4f2b-9261-048b5f86798a&autoAuth=true&ctid=12a3af23-a769-4654-847f-958f3d479f4a" frameborder="0" allowFullScreen="true"></iframe>
+</div>
+{% endblock content%}

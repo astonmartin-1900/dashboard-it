@@ -1,0 +1,147 @@
+{% extends "base.html" %}
+{% load bootstrap4 %}
+{% block title %}Edit{% endblock title %}
+{% block content %}
+
+<style>
+    form .form-group label {
+        /* font-size: 16px; */
+        padding: 10px 0 10px 0;
+    }
+
+    p {
+        font-size: 16px;
+    }
+
+    .form-control {
+        color: #808080;
+    }
+
+    input[text] {
+        color: #808080;
+    }
+
+    .form-group:nth-child(5) {
+        font-size: 12px;
+        color: #515151;
+    }
+
+    .form-group:nth-child(5) a {
+        font-size: 12px;
+        color: #515151;
+    }
+
+    input[type=file]::file-selector-button {
+        background-color: #fff;
+        color: #515151;
+        border: 1px solid #515151;
+        padding: 5.5px 18px;
+        border-radius: 4px;
+        font-weight: 400;
+        font-size: 10px;
+        margin-top: 10px;
+    }
+
+    #id_user_image {
+        min-width: 400px;
+    }
+
+    .cancel {
+        border: 1px solid #D64123;
+        color: #D64123;
+        background-color: #fff;
+        float: right;
+        margin: 50px 0px;
+        padding: 8px 24px;
+        line-height: 1rem;
+        box-shadow: none;
+        margin-right: 5%;
+    }
+
+    .btn-primary:active:focus {
+        box-shadow: none;
+    }
+
+    .cancel:focus,
+    .cancel,
+    .cancel:active {
+        border: 1px solid #D64123;
+        color: #D64123;
+        background-color: #fff;
+        float: right;
+        margin: 50px 0px;
+        padding: 8px 24px;
+        line-height: 1rem;
+        box-shadow: none;
+        margin-right: 5%;
+    }
+
+    .cancel:hover {
+        border: 1px solid #D64123;
+        color: #fff;
+        background-color: #D64123;
+        float: right;
+        margin: 50px 0px;
+        padding: 8px 24px;
+        line-height: 1rem;
+        margin-right: 5%;
+    }
+
+    button[type=submit] {
+        border: 1px solid #2E8025;
+        color: #2E8025;
+        background-color: #fff;
+        float: right;
+        margin: 50px 0px;
+        padding: 8px 24px;
+        line-height: 1rem;
+    }
+
+    button[type=submit]:focus,
+    button[type=submit]:active {
+        border: 1px solid #2E8025;
+        color: #fff;
+        background-color: #2E8025;
+        float: right;
+        margin: 50px 0px;
+        padding: 8px 24px;
+        line-height: 1rem;
+        box-shadow: none;
+    }
+
+    button[type=submit]:hover {
+        border: 1px solid #2E8025;
+        color: #fff;
+        background-color: #2E8025;
+        float: right;
+        margin: 50px 0px;
+        padding: 8px 24px;
+        line-height: 1rem;
+    }
+
+    form {
+        padding-bottom: 100px;
+    }
+
+    textarea.form-control {
+        resize: none;
+        height: 80px;
+    }
+
+    .btn-primary {
+        color: #fff;
+        background-color: #63513d;
+        border-color: #63513d;
+    }
+</style>
+<h2 class="page-title">Edit your account</h2>
+<p>You can edit your account using the follow form:</p>
+<form action="" method="post" style="width: 50%;" class="form" accept-charset="utf-8" enctype="multipart/form-data">
+    {% csrf_token %}
+    {% bootstrap_form form %}
+    {% buttons %}
+    <button type="submit" class="submit">Submit</button>
+    <a type="button" href="{% url 'authapp:dashboard' %}" class="cancel" style="padding: 11px 24px;">Cancel</a>
+    {% endbuttons %}
+</form>
+{% endblock content %}

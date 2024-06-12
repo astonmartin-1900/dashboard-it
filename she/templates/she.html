@@ -1,0 +1,102 @@
+{% extends "base.html" %}
+{% load static %}
+{% block page-title %} | SHE{% endblock page-title %}
+{% block styles %}
+    <link rel="stylesheet" type="text/css" href="{% static '/css/she.css' %}">
+{% endblock styles %}
+{% block content %}
+    <div class="message_conteiner">
+        <div class="blur" style="filter: blur(4px);">
+            <div class="she-block">
+                <h2 class="page-title">SHE</h2>
+                <div>
+                    <img class="she-img" src="{% static '/img/she-img/she_1.png' %}" >
+                    <div class="advertisement">
+                        <img src="{% static '/img/she-img/she_2.png' %}">
+                        <div class="advertisement_text">
+                            <p><b>Lorem ipsum dolor sit amet</b></br>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Nulla posuere sollicitudin aliquam ultrices sagittis orci.</p>
+                        </div>
+                    </div>
+                    <div class="advertisement">
+                        <img src="{% static '/img/she-img/she_3.png' %}">
+                        <div class="advertisement_text">
+                            <p><b>Lorem ipsum dolor sit amet</b></br>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Nulla posuere sollicitudin aliquam ultrices sagittis orci.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="helpfull-tips" >
+                <h2 class="page-title">Helpful tips</h2>
+                <div class="tips">
+                    <table>
+                        <tr>
+                            <td><img src="{% static '/img/she-img/Alert.png' %}"></td>
+                            <td><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Nulla posuere sollicitudin aliquam ultrices sagittis orci.</p></td>
+                        </tr>
+                        <tr>
+                            <td><img src="{% static '/img/she-img/Alert.png' %}"></td>
+                            <td><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Nulla posuere sollicitudin aliquam ultrices sagittis orci.</p></td>
+                        </tr>
+                        <tr>
+                            <td><img src="{% static '/img/she-img/Alert.png' %}"></td>
+                            <td><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Nulla posuere sollicitudin aliquam ultrices sagittis orci.</p></td>
+                        </tr>
+                        <tr>
+                            <td><img src="{% static '/img/she-img/Alert.png' %}"></td>
+                            <td><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Nulla posuere sollicitudin aliquam ultrices sagittis orci.</p></td>
+                        </tr>            
+                    </table>
+                </div>   
+            </div>
+        </div>
+        <div class="form_container" id="popup">
+            <div class="message_form">
+                <h3 class="form-title">SHE</h3>
+                <div class="message">
+                    <p>Dear {{firstname}} {{lastname}}, </p>
+                    <p>The page is currently under development. Thank you for your patience!</p>
+                    <p>Kindly regards, development team.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Delete next styles after development -->
+    <style>
+        .form_container{
+            display: flex;
+            position: absolute;
+            z-index: 1;
+            width: 100%;
+            height: 100%;
+            left: 0;
+            top: 0;
+            justify-content: center;
+            align-items: center;
+            border-radius: 5px;
+            background-color: rgba(22,22,22,0.5); /* complimenting your modal colors */
+        }
+        .message_form{
+            padding: 10px;
+            display: block;
+            width: 50%;
+            /* #FFFFFF */
+            background: #FFFFFF;
+            /* Drop Shadow */
+            box-shadow: 0px 6px 18px rgba(0, 0, 0, 0.06);
+            border-radius: 4px;
+        }
+        .message_form .form-title {
+            text-align: left;
+            color: green;
+            font-size: 15px;
+            border-bottom: 2px solid green;
+            margin: 0 12px 12px 12px;
+            padding: 12px 0px;
+            font-weight: 700;
+        }
+        .message_form .message{
+            padding: 12px;
+            font-weight: 400;
+        }
+    </style>
+{% endblock content%}

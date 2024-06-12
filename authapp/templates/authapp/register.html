@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% load bootstrap4 %}
+{% block title %}Registration
+
+{% endblock title %}
+{% block content %}
+
+{% if form.errors %}
+    
+{% endif %}
+    
+<form accept-charset="utf-8" enctype="multipart/form-data" action="" method="post" class="form container" 
+      id="user_creation_form">
+    {% csrf_token %}
+    {% bootstrap_form form %}
+    {% buttons %}
+    <br/>
+    <div class="register-buttons">
+      <button type="submit" class="submit" onclick="handleButtonClick()">Submit</button>
+      <button style="display: none;" class="button button-loader">{% include 'button-loader.html' %}</button>
+      <button  href="{% url 'authapp:settings' %}" onclick="" class="cancel" type="reset">Back to settings</button>
+    </div>
+    {% endbuttons %}
+</form>
+<script>
+   function handleButtonClick() {
+
+    var submitButton = document.getElementsByClassName("btn-primary")[0];
+    submitButton.style.display = "none";
+
+    var loaderButton = document.getElementsByClassName("button-loader")[0];
+    loaderButton.style.display = "inline-block";
+  }
+</script>
+{% endblock content %}

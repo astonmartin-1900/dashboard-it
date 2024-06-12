@@ -1,0 +1,274 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block page-title %} | Actions{% endblock page-title %}
+{% block styles %}
+    <link rel="stylesheet" href="">
+    <link rel="stylesheet" type="text/css" href="{% static '/css/action.css' %}">
+{% endblock styles %}
+{% block content %}
+    <div>
+        <div class="btns">
+            <a href="{% url 'actions:action_main' %}" onclick="openForm()">
+                <img src="{% static '/img/back.png' %}" alt="update page"> 
+                <span class="add">Back to Active Actions</span>
+            </a>
+        </div>
+        <h2 class="page-title">Actions History</h2>
+    </div>
+    <table class="actions_table" style="width: 100%;">
+        {% include 'all_actions.html' %}
+    </table>
+    <div class="form_container" id="edit-popup">
+        <div class="action_form_editing">
+            <h3 class="form-title" style="text-align: center;">Editing action <span name="result"></span></h3>
+            <form id="action_editing_form" method="POST" value="">
+                {% csrf_token %}
+                <fieldset class="checkboxes">
+                    <span class="label">Status</span>
+                    <div class="chebox_item in_progress draft">
+                        <input type="radio" id="in_progress_edit" name="status" value="draft"
+                           {% if action.action_status == "draft" %}
+                            checked
+                           {% endif%}
+                        >
+                        <label for="in_progress_edit"><img src="{% static '/img/in_progress.svg' %}" alt="Cancel"></label>
+                    </div>
+
+                    <div class="chebox_item done completed">
+                        <input type="radio" id="done_edit" name="status" value="completed"
+                           {% if action.action_status == "completed" %}
+                              checked
+                           {% endif%}
+                        >
+                        <label for="done_edit"><img src="{% static '/img/done.svg' %}" alt="Cancel"></label>
+                    </div>
+
+                    <div class="chebox_item cancel canceled">
+                        <input type="radio" id="cancel_edit" name="status" value="canceled"
+                           {% if action.action_status == "canceled" %}
+                              checked
+                           {% endif%}
+                        >
+                        <label for="cancel_edit"><img src="{% static '/img/cancel.svg' %}" alt="Cancel"></label>
+                    </div>
+
+                </fieldset>
+                <div class="form_fields">
+                    <div class="deadline">
+                        <span class="label">Deadline date</span>
+                        <input type="date" id="deadline_date" value='{{action.deadline_date|date:"Y-m-d"}}' required>
+                    </div>
+                </div>
+                <div class="form_fields">
+                    <div class="action_form_title">
+                        <legend class="label">Issue</legend>
+                        <input type="text" placeholder="Text" id="issue_name" value="{{action.issue_name}}" required>
+                    </div>
+                </div>
+                <div class="form_fields">
+                    <div class="action_form_action">
+                        <legend class="label">Action</legend>
+                        <input type="text" placeholder="Text" id="action_text" value="{{action.action_text}}" required>
+                    </div>
+                </div>
+                <div class="form_fields">
+                    <div class="action_form_solution">
+                        <legend class="label">Solution</legend>
+                        <input type="text" placeholder="Text" id="solution_text" value="{{action.solution_text}}">
+                    </div>
+                </div>
+                <div class="form_fields">
+                    <fieldset class="action_form_perfromer">
+                        <span class="label">Performers</span>
+                        <div class="checkbox-dropdown">
+                            <ul class="checkbox-dropdown-list">
+                                {% for user in user_profile_list %}
+                                    <li>
+                                        <input type="checkbox" id="{{user.pk}}" value="{{user.pk}}" name="action_editing_assigned_user"
+                                        {% if user in action.assigned_user.all%}
+                                            checked
+                                        {% endif%}
+                                        >
+                                        <label for="{{user.pk}}">
+                                            <img alt="{{user.first_name}} {{user.last_name}}"
+                                                    title="{{user.first_name}} {{user.last_name}}"  
+                                                    src="{{user.user_image.url}}">
+                                            <span class="performer_name">{{user.first_name}}</span>
+                                            <span class="performer_surname">{{user.last_name}}</span>
+                                        </label>
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                        <div class="user_images">
+
+                        </div>
+                    </fieldset>
+                </div>
+                <div class="form_fields edit_buttons">
+                    <button class="button confirm" type="submit">Confirm</button>
+                    <button style="display: none;" class="button button-loader">{% include 'button-loader.html' %}</button>
+                    <button  href="#" onclick="closeEditingForm()" class="cancel" type="reset">Back to actions</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <script src="{% static '/js/action_form.js' %}"></script>      
+    <script>
+        $("#all_users").click(function () {
+            var checkboxes = document.getElementsByName('assigned_user');
+            // loop over them all
+            if (checkboxes[0].checked == false){
+                for (var i=0; i<checkboxes.length; i++) {
+                    checkboxes[i].checked = false;
+                }
+            }
+            else{
+                for (var i=0; i<checkboxes.length; i++) {
+                    checkboxes[i].checked = true;
+                }
+            }
+        });
+        $(".show-more").click(function () {
+            var elements = $(".hiden");
+            $.each(elements, function (index, tr) {
+                $(this).css("display", "table-row");
+            });
+            $(this).css("display", "none");
+            $(".show-less").css("display", "block");
+        });
+        $(".show-less").click(function () {
+            var elements = $(".hiden");
+            $.each(elements, function (index, tr) {
+                $(this).css("display", "none");
+            });
+            $(this).css("display", "none");
+            $(".show-more").css("display", "block");
+        });
+
+        $(".checkbox-dropdown").click(function () {
+            $(this).toggleClass("is-active");
+            // $(".checkbox-dropdown").toggleClass("is-active");
+        });
+
+        $(".checkbox-dropdown ul").click(function(e) {
+            e.stopPropagation();
+        });
+        function getCheckedBoxes(chkboxName) {
+            var checkboxes = document.getElementsByName(chkboxName);
+            var checkboxesChecked = [];
+            // loop over them all
+            for (var i=0; i<checkboxes.length; i++) {
+                // And stick the checked ones onto an array...
+                if (checkboxes[i].checked) {
+                    if (checkboxes[i].value != "all"){
+                        checkboxesChecked.push(checkboxes[i].value);
+                    }
+                }
+            }
+            // Return the array if it is non-empty, or null
+            return checkboxesChecked.length > 0 ? checkboxesChecked : null;
+        }
+
+        function openForm() {
+            var element = document.getElementById("popup");
+            element.classList.add("show");
+            document.body.style.overflowY = "hidden";
+            $('.confirm').show();
+        }
+        function closeForm() {
+            var element = document.getElementById("popup");
+            element.classList.remove("show");
+            document.body.style.overflowY = "scroll";
+            $(".checkbox-dropdown").toggleClass("is-active");
+        }
+        function closeEditingForm() {
+            var element = document.getElementById("edit-popup");
+            element.classList.remove("show");
+            document.body.style.overflowY = "scroll";
+            $(".checkbox-dropdown").toggleClass("is-active");
+        }
+        $("input[type='checkbox'][name='assigned_user']").click(function () {
+            if ($("input[type='checkbox']#all_users:checked") && $(this).attr("id")!='all_users'){
+                $("input[type='checkbox']#all_users").prop('checked',false);
+            }
+        });        
+        $(document).on('submit', '#action_editing_form',function(e){
+            e.preventDefault();
+            $('.confirm').hide();
+            $('.button-loader').show();
+
+            var date = new Date($(this).children('.form_fields').children('.deadline').children('input').val());
+            var day = date.getDate();
+            var month = date.getMonth() + 1;
+            var year = date.getFullYear();
+
+            deadline_date = [year, month, day ].join('-');           
+            
+            let checkboxes= $(this).find("input[type='checkbox']")
+            var checkboxesChecked = [];
+            var checkboxesUnchecked = [];
+
+            for (var i=0; i<checkboxes.length; i++) {
+                // And stick the checked ones onto an array...
+                if (checkboxes[i].checked == false) {
+                    if (checkboxes[i].id != 'all_users'){
+                        checkboxesUnchecked.push(checkboxes[i].value);
+                    }
+                } else
+                if (checkboxes[i].checked == true){
+                    if (checkboxes[i].id != 'all_users'){
+                        checkboxesChecked.push(checkboxes[i].value);
+                    }  
+                }
+            }
+            let unassigned_user = checkboxesUnchecked.join();
+            let assigned_user = "";
+
+            if(checkboxesChecked.length === 0){
+                alert("Please select assigned user");
+                $('.confirm').show();
+                $('.button-loader').hide();
+                return false;
+            } 
+            else {
+                assigned_user = checkboxesChecked.join();
+            }
+
+            $.ajax({
+                type:'POST',
+                url:'{% url "actions:actions_history" %}',
+                data:{
+                    action_pk: $(this).attr('value'),
+                    selected_status: $(this).find("input[type='radio'][name='status']:checked").val(),
+                    deadline_date: deadline_date,
+                    issue_name: $(this).children('.form_fields').children('.action_form_title').children('input').val(),
+                    action_text: $(this).children('.form_fields').children('.action_form_action').children('input').val(),
+                    solution_text: $(this).children('.form_fields').children('.action_form_solution').children('input').val(),
+                    assigned_user: assigned_user,
+                    unassigned_user: unassigned_user,
+
+                    csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val(),
+                    action: 'edit'
+                },
+                success:function(json){
+                    // $('.actions_table').html('');
+                    console.log(json)
+                    $('.actions_table').html(json);
+                    closeEditingForm();
+                    $('.confirm').show();
+                    $('.button-loader').hide();
+                    $(".show-less").css("display", "none");
+                    $(".show-more").css("display", "block");
+                    $(".checkbox-dropdown").toggleClass("is-active");
+                },
+                error : function(xhr,errmsg,err) {
+                    $('#results').html("<div class='alert-box alert radius' data-alert>Oops! We have encountered an error: "+errmsg+
+                        " <a href='#' class='close'>&times;</a></div>"); // add the error to the dom
+                    console.log(xhr.status + ": " + xhr.responseText); // provide a bit more info about the error to the console
+                }
+            });
+        });
+    </script>
+{% endblock content %}

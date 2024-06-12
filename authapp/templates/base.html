@@ -1,0 +1,161 @@
+{% load static %}
+{{ redirect_to_login_immediately }}
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" type="image/x-icon" href="{% static '/img/favicon.png' %}">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="{% static '/css/style.css' %}">
+    <script src="{% static '/js/jquery-3.6.1.js' %}"></script>
+    <!-- FoNTs-->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+    {% block styles %}
+
+    {% endblock styles %}
+    <title>WOR {% block page-title %}{% endblock page-title %}</title>
+    {% block meta-data %}
+    
+    {% endblock meta-data %}
+  </head>
+  <body>
+
+    <header id="header"><!-- class="toggeled" Will be added once click at toggle button -->
+      <nav class=".navbar-expand-xl|lg|md|sm menu">
+      <div class="logo-block">
+          <a class="navbar-brand" href="#">
+              <img src="{% static '/img/logo-nestle.png' %}" class="logo-img" alt="Nestle logo">
+          
+              <span class="logo-text">NBS Lviv Web Content</br> Management Team</span>
+          </a>
+      </div>
+      <div class="accordion" id="accordionPanelsStayOpenExample">
+          <div class="accordion-item">
+            <h2 class="accordion-header" id="panelsStayOpen-headingOne">
+              <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="true" aria-controls="panelsStayOpen-collapseOne">
+                <span>Team meeting</span>
+              </button>
+            </h2>
+            <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse show" aria-labelledby="panelsStayOpen-headingOne">
+              <div class="accordion-body">
+                  <ul class="navbar-nav">
+                      {% if request.path == "/" %}
+                      <li class="nav-item active">
+                      {% else %}
+                      <li class="nav-item ">
+                      {% endif %}
+                        <a class="nav-link" class="agenda_link" href="{% url 'authapp:agenda' %}"><span class="agenda_image"></span><span class="agenda">Agenda</span></a>
+                      </li>
+                      {% if request.path == "/attendance/" %}
+                      <li class="nav-item active">
+                      {% else %}
+                      <li class="nav-item ">
+                      {% endif %}
+                        <a class="nav-link" href="{% url 'attendance:attendance_page' %}"><span class="attendance_image"></span><span class="attendance">Attendance</span></a>
+                      </li>
+                      {% if request.path == "/she/" %}
+                      <li class="nav-item active">
+                      {% else %}
+                      <li class="nav-item ">
+                      {% endif %}
+                        <a class="nav-link" href="{% url 'she:she_main' %}"><span class="she_image"></span><span class="she">SHE</span></a>
+                      </li>
+                      {% if request.path == "/actions/" %}
+                      <li class="nav-item active">
+                      {% else %}
+                      <li class="nav-item ">
+                      {% endif %}
+                        <a class="nav-link" href="{% url 'actions:action_main' %}"><span class="actions_image"></span><span class="actions">Actions</span></a>
+                      </li>
+                      {% if request.path == "/improvements/" %}
+                      <li class="nav-item active">
+                      {% else %}
+                      <li class="nav-item ">
+                      {% endif %}
+                        <a class="nav-link" href="{% url 'improvements:improvements_main' %}"><span class="improvments_image"></span><span class="improvments">Improvments</span></a>
+                      </li>
+                      {% if request.path == "/recognitions/" %}
+                      <li class="nav-item active">
+                      {% else %}
+                      <li class="nav-item ">
+                      {% endif %}
+                        <a class="nav-link" href="{% url 'recognitions:recognition_page' %}"><span class="recognition_image"></span><span class="recognition">Recognition</span></a>
+                      </li>
+                      {% if request.path == "/notice-board/" %}
+                      <li class="nav-item active" >
+                      {% else %}
+                      <li class="nav-item ">
+                      {% endif %}
+                        <a class="nav-link" href="{% url 'notice_board:notice_board' %}"><span class="notice_board_image"></span><span class="notice_board">Measures</span></a>
+                      </li>
+                    </ul>
+              </div>
+            </div>
+          </div>
+          <div class="accordion-item">
+            <h2 class="accordion-header" id="panelsStayOpen-headingTwo">
+              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseTwo" aria-expanded="false" aria-controls="panelsStayOpen-collapseTwo">
+                <span>Optional</span>
+              </button>
+            </h2>
+            <div id="panelsStayOpen-collapseTwo" class="accordion-collapse collapse" aria-labelledby="panelsStayOpen-headingTwo">
+              <div class="accordion-body">
+                  <ul class="navbar-nav">
+                      {% if request.path == "/dashboard/" %}
+                      <li class="nav-item active">
+                      {% else %}
+                      <li class="nav-item ">
+                      {% endif %}
+                        <a class="nav-link" href="{% url 'authapp:dashboard' %}"><span class="settings_image"></span><span class="settings">Settings</span></a>
+                      </li>
+                  </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="toggle-wrap"   onclick="addClass()">
+          <a href="#">
+              <span class="toggle-image"></span>
+              <span class="toggle-sb">Toggle sidebar</span>
+          </a>
+        </div>     
+        </nav>
+    </header>
+    <container id="body">
+        <div id="menu"> </div>
+        <div class="container-fluid">
+            <div class="row">             
+                <div id="header-space" class="col-sm-3 col-md-2 col-lg-2"> <!-- class="header_space" Will be added once click at toggle button -->
+                    <div class="menu-space"></div>
+                </div>
+                <div id="content" class="col-sm-9 col-md-10 col-lg-10 red"><!-- class="toggeled_content" Will be added once click at toggle button -->
+                    <div class="content-block" >
+                        {% block content  %}
+                        {% endblock content  %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </container>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+    <script>
+        function addClass() { 
+            const header = document.getElementById("header");
+            const content = document.getElementById("content");
+            const header_space = document.getElementById("header-space");
+            
+            header.classList.toggle("toggeled");
+            content.classList.toggle("toggeled_content");
+            header_space.classList.toggle("header_space");
+            // new part
+            $(".checkbox-dropdown-list").toggleClass("move")
+        }
+    </script>
+</body>
+</html>

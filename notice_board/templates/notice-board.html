@@ -1,0 +1,309 @@
+{% extends "base.html" %}
+{% load static %}
+{% block page-title %} | Notice Board{% endblock page-title %}
+{% block styles %}
+    <link rel="stylesheet" type="text/css" href="{% static '/css/she.css' %}">
+{% endblock styles %}
+{% block content %}
+    <style>
+        .content-block{
+            display: flex;
+            flex-direction: row;
+            align-items: flex-start;
+            justify-content: space-between;
+            background-color: lightgray;
+            padding: 0px;
+            margin: 0px;
+        }
+        /* Main notice board section */
+        .notice-board{
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: flex-start;
+            flex-wrap: wrap;
+            float: left;
+            width:  calc(60% - 8px);
+            background: white;
+            /* card shadow */
+            box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.08);
+            border-radius: 4px;
+            padding: 15px 20px 10px ;
+        }
+        .notice-board .page-title{
+            display: flex;
+            flex: 0 0 100%;
+            /* color: green;
+            font-size: 15px;
+            border-bottom: 2px solid green;
+            padding-bottom: 12px;
+            font-weight: 700;
+            margin-bottom: 12px; */
+        }
+        .notice-board .notice{
+            display: flex;
+            align-items: flex-start;
+            flex: 0 0 48%;
+            flex-direction: column;
+            margin: 14px 0px;
+            padding: 0px 0px 8px;
+            gap: 8px;
+            /* BG */
+            background: #FFFFFF;
+            border: 1px solid #F5F6F8;
+            /* Drop Shadow */
+            box-shadow: 0px 6px 18px rgba(0, 0, 0, 0.06);
+            border-radius: 4px;
+        }
+        .notice-board .notice .notice-img{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            height: 150px;
+        }
+
+        .notice-board .notice .notice-img img{
+            max-width: 100%;
+            height: auto;
+            aspect-ratio: 16 / 9;
+        }
+        .notice-board .notice .notice-body{
+            display: flex;
+            align-items: flex-end;
+            width: 100%;
+            height: 50px;
+            margin-top: -15px;
+        }
+        .notice-board .notice .notice-body .creator-image{
+            display: flex;
+            width: 30%;
+            justify-content: center;
+            align-items: center;
+        }
+        .notice-board .notice .notice-body .creator-image img{
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+        }
+        .notice-board .notice .notice-body .notice-info{
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 5px;
+        }
+        .notice-board .notice .notice-body .notice-info .website-name{
+            font-weight: 500;
+            font-size: 15px;
+            line-height: 18px;
+            /* identical to box height */
+            letter-spacing: 0.01em;
+            /* Text */
+            color: #008FC7;
+        }
+        .notice-board .notice .notice-body .notice-info .creator_name{
+            font-weight: 400;
+            font-size: 12px;
+            line-height: 14px;
+            letter-spacing: 0.01em;
+            /* Text */
+            color: #34220D;
+        }
+        /* Move to the below  */
+        .notice-board, .stickers{
+            font-family: 'Roboto';
+            font-style: normal;
+            color: #34220D;
+        }
+        .stickers{
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: center;
+            width: 40%;
+        }
+        .stickers .sticker:first-child{
+            margin-top: 0px;
+        }
+        .stickers .sticker{
+            display: flex;
+            justify-content: center;
+            width: calc(100% - 24px) ;
+            flex-direction: column;
+            padding: 16px;
+            margin: 8px 0px;
+            /* white */
+            background: #FFFFFF;
+            /* card shadow */
+            box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.08);
+            border-radius: 4px;
+        }
+        .stickers .sticker .sticker-title{
+            font-weight: 600;
+            font-size: 18px;
+            line-height: 21px;
+            letter-spacing: 0.01em;
+            /* #D64123 */
+            color: #D64123;
+            padding: 8px 0px;
+        }
+        .stickers .sticker img{
+            width: 100%;
+            height: auto;
+        }
+        .stickers .sticker .sticker-content p{
+            text-align: justify;
+            font-weight: 400;
+            font-size: 14px;
+            line-height: 16px;
+            letter-spacing: 0.01em;
+            opacity: 0.5;
+            margin-bottom: 0px;
+        }
+        .stickers .sticker .sticker-content .sticker-general{
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0px;
+            font-weight: 400;
+            font-size: 12px;
+            line-height: 14px;
+            letter-spacing: 0.01em;
+        }
+        .stickers .sticker .sticker-content .sticker-general .sticker-creation-date{
+            color: #6F2277;
+        }
+    </style>
+    <div class="blur" style="filter:blur(4px)">
+        <div class="notice-board">
+            <h1 class="page-title">Notice Board</h1>
+            <div class="notice">
+                <div class="notice-img">
+                    <img src="{% static '/img/notice-board-img/Rectangle 133.png' %}" alt="">
+                </div>
+                <div class="notice-body">
+                    <div class="creator-image">
+                        <img src="{% static '/img/notice-board-img/image 2.png' %}" alt="">
+                    </div>
+                    <div class="notice-info">
+                        <span class="website-name">Nestlé UA website</span>
+                        <span class="creator_name">Sierra Ferguson</span>
+                    </div>
+                </div>
+            </div>
+            <div class="notice">
+                <div class="notice-img">
+                    <img src="{% static '/img/notice-board-img/Rectangle 133.png' %}" alt="">
+                </div>
+                <div class="notice-body">
+                    <div class="creator-image">
+                        <img src="{% static '/img/notice-board-img/image 2.png' %}" alt="">
+                    </div>
+                    <div class="notice-info">
+                        <span class="website-name">Nestlé UA website</span>
+                        <span class="creator_name">Sierra Ferguson</span>
+                    </div>
+                </div>
+            </div>
+            <div class="notice">
+                <div class="notice-img none">
+                    <img src="{% static '/img/notice-board-img/no-image.svg' %}" alt="">
+                </div>
+                <div class="notice-body">
+                    <div class="creator-image">
+                        <img src="{% static '/img/notice-board-img/image 2.png' %}" alt="">
+                    </div>
+                    <div class="notice-info">
+                        <span class="website-name">Nestlé UA website</span>
+                        <span class="creator_name">Sierra Ferguson</span>
+                    </div>
+                </div>
+            </div>
+            <div class="notice">
+                <div class="notice-img">
+                    <img src="{% static '/img/notice-board-img/Rectangle 133.png' %}" alt="">
+                </div>
+                <div class="notice-body">
+                    <div class="creator-image">
+                        <img src="{% static '/img/notice-board-img/image 2.png' %}" alt="">
+                    </div>
+                    <div class="notice-info">
+                        <span class="website-name">Nestlé UA website</span>
+                        <span class="creator_name">Sierra Ferguson</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="stickers">
+            <div class="sticker">
+                <h3 class="sticker-title">Lorem ipsum dolor sit amet</h3>
+                <img src="{% static '/img/notice-board-img/unsplash_BuQ-jgeexaQ.png' %}" alt="" class="sticker-img">
+                <div class="sticker-content">
+                    <div class="sticker-general">
+                        <span class="sticker-type">Announcement</span>
+                        <span class="sticker-creation-date">January 23, 2022</span>
+                    </div>
+                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloribus nam nemo autem repudiandae soluta praesentium officiis ratione voluptas dignissimos sapiente in, totam maxime! Dolore odio ullam culpa eum optio ut!</p>
+                </div>
+            </div>
+            <div class="sticker">
+                <h3 class="sticker-title">Lorem ipsum dolor sit amet</h3>
+                <img src="{% static '/img/notice-board-img/unsplash_BuQ-jgeexaQ.png' %}" alt="" class="sticker-img">
+                <div class="sticker-content">
+                    <div class="sticker-general">
+                        <span class="sticker-type">Announcement</span>
+                        <span class="sticker-creation-date">January 23, 2022</span>
+                    </div>
+                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloribus nam nemo autem repudiandae soluta praesentium officiis ratione voluptas dignissimos sapiente in, totam maxime! Dolore odio ullam culpa eum optio ut!</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="form_container" id="popup">
+        <div class="message_form">
+            <h3 class="form-title">Notice Board</h3>
+            <div class="message">
+                <p>Dear {{firstname}} {{lastname}}, </p>
+                <p>The page is currently under development. Thank you for your patience!</p>
+                <p>Kindly regards, development team.</p>
+            </div>
+        </div>
+    </div>
+        <!-- Delete next styles after development -->
+        <style>
+            .form_container{
+                display: flex;
+                position: absolute;
+                z-index: 2;
+                width: 100%;
+                height: 100%;
+                left: 0;
+                top: 0;
+                justify-content: center;
+                align-items: center;
+                border-radius: 5px;
+                background-color: rgba(22, 22, 22, 0.5); /* complimenting your modal colors */
+            }
+            .message_form{
+                padding: 10px;
+                display: block;
+                width: 50%;
+                /* #FFFFFF */
+                background: #FFFFFF;
+                /* Drop Shadow */
+                box-shadow: 0px 6px 18px rgba(0, 0, 0, 0.06);
+                border-radius: 4px;
+            }
+            .message_form .form-title {
+                text-align: left;
+                color: green;
+                font-size: 15px;
+                border-bottom: 2px solid green;
+                margin: 0 12px 12px 12px;
+                padding: 12px 0px;
+                font-weight: 700;
+            }
+            .message_form .message{
+                padding: 12px;
+                font-weight: 400;
+            }
+        </style>
+{% endblock content%}

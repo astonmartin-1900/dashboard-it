@@ -1,0 +1,291 @@
+{% extends "base.html" %}
+{% load static %}
+{% block page-title %} | Facilitator settings{% endblock page-title %}
+{% block styles %}
+    <link rel="stylesheet" type="text/css" href="{% static '/css/account.css' %}">
+{% endblock styles %}
+{% block content %}
+    <div class="headling">
+        <div class="btns">
+            <a href="{% url 'authapp:calendar_generate' %}" ><img src="{% static '/img/update.png' %}" alt="Update page"> <span class="update">Generate</span></a>
+            <a href="{% url 'authapp:register' %}" ><img src="{% static '/img/create.png' %}" alt="Create user"> <span class="update">Create user</span></a>
+            <a href="#" ><img src="{% static '/img/remove.png' %}" alt="Remove user"> <span class="remove-user">Remove user</span></a>
+            <a href="#" ><img src="{% static '/img/add.png' %}" alt="Add user"> <span class="select-user">Add user</span></a>
+        </div>
+        <h2 class="page-title">Settings</h2>
+        <div class="content_tabs">
+            <a href="{% url 'authapp:dashboard' %}">Account setup</a>
+            <a href="#" class="active">Facilitator settings</a>
+        </div>
+    </div>
+    <form id="facilitator_update_for" class="facilitator_settings">
+        {% csrf_token %}
+        <div class="facilitator_selector">
+            {% include 'account/facilitator_list.html' %}
+        </div>
+        <div class="right-sidebar">
+            <div class="facilitators">
+                <h2 class="page-title">The Week #{{current_week}} facilitators:</h2>
+                {% include 'week_facilitators.html' %}
+                <!-- {% for role in current_week_roles%}
+                    <div class="user_description" style="margin-bottom: 56px;">
+                        <div class="user_information_block">
+                            <div class="user_image">
+                                <img alt="{{role.wor_leader.first_name}} {{role.wor_leader.last_name}}" 
+                                     title="{{role.wor_leader.first_name}} {{role.wor_leader.last_name}}" 
+                                     src="{{role.wor_leader.user_image.url}}">
+                            </div>
+                            <div class="user_information">
+                                <h3 class="block_title">WOR LEADER</h3>
+                                <span class="user_name">{{role.wor_leader.first_name}} {{role.wor_leader.last_name}}</span>
+                            <span class="user_position">{{role.wor_leader.user_position}}</span> 
+                            </div>
+                        </div>
+                        <div class="user_personal_data_block">
+                            <div class="user_personal_data" title="Copy to clipboard" onclick="findDataSpan()">
+                                <span class="label">Email:</span>
+                                <span class="data">{{role.wor_leader.email}}</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="user_description">
+                        <div class="user_information_block">
+                            <div class="user_image">
+                                <img src="{{role.wor_engager.user_image.url}}" 
+                                     alt="{{role.wor_engager.first_name}} {{role.wor_engager.last_name}}"
+                                     title="{{role.wor_engager.first_name}} {{role.wor_engager.last_name}}">
+                            </div>
+                            <div class="user_information">
+                                <h3 class="block_title block_title_engager">COMUNICATION ENGAGER</h3>
+                                <span class="user_name">{{role.wor_engager.first_name}} {{role.wor_engager.last_name}}</span>
+                                <span class="user_position">{{role.wor_engager.user_position}}</span> 
+                            </div>
+                        </div>
+                        <div class="user_personal_data_block">
+                            <div class="user_personal_data" title="Copy to clipboard" onclick="findDataSpan()">
+                                <span class="label">Email:</span>
+                                <span class="data" id ="get_mail">{{role.wor_engager.email}}</span>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %} -->
+            </div>
+            <div class="action_buttons">
+                <button class="cancel" type="reset">Cancel</button>
+                <button class="submit" type="submit">Accept change</button>
+            </div>
+        </div>
+    </form>
+    <div class="form_container" id="popup_remove">
+        <div class="user_remove_form">
+            {% include 'account/actions/user-to-remove.html' %}
+        </div>
+    </div>
+    <div class="form_container" id="popup_add">
+        <div class="user_add_form">
+            {% include 'account/actions/user-to-add.html' %} 
+        </div>
+    </div>
+    <script src="{% static '/js/account.js' %}"></script>  
+    <script>
+        function closeRemoveForm() {
+            var element = document.getElementById("popup_remove");
+            element.classList.remove("show");
+            document.body.style.overflowY = "scroll";
+            $('input[type=radio]').prop('checked', false);
+        }
+        function openAddForm() {
+            var element = document.getElementById("popup_add");
+            element.classList.add("show");
+            document.body.style.overflowY = "hidden";
+        }
+        function closeAddForm() {
+            var element = document.getElementById("popup_add");
+            element.classList.remove("show");
+            document.body.style.overflowY = "scroll";
+            $('input[type=radio]').prop('checked', false);
+        }
+        /////////////// Users to remove list generation ///////////////
+        $('.remove-user').click(function(e){
+            e.preventDefault();
+            $.ajax({
+                type:'POST',
+                url:'{% url "authapp:settings" %}',
+                data: {
+                    'operation':'generate-remove-user-list',
+                    'csrfmiddlewaretoken': $('input[name=csrfmiddlewaretoken]').val(),
+                },
+                success: function(response) {
+                    var element = document.getElementById("popup_remove");
+                    element.classList.add("show");
+                    document.body.style.overflowY = "hidden";
+                    $('.user_remove_form').html(response);
+                    $('.user_add_form').html('');
+                },
+                error : function(xhr,errmsg,err) {
+                    $('#results').html("<div class='alert-box alert radius' data-alert>Oops! We have encountered an error: "+errmsg+
+                        " <a href='#' class='close'>&times;</a></div>"); // add the error to the dom
+                    console.log(xhr.status + ": " + xhr.responseText); // provide a bit more info about the error to the console
+                }
+
+            });
+        })
+        /////////////// Users to add list generation ///////////////
+        $('.select-user').click(function(e){
+            e.preventDefault();
+            $.ajax({
+                type:'POST',
+                url:'{% url "authapp:settings" %}',
+                data: {
+                    'operation':'generate-add-user-list',
+                    'csrfmiddlewaretoken': $('input[name=csrfmiddlewaretoken]').val(),
+                },
+                success: function(response) {
+                    var element = document.getElementById("popup_add");
+                    element.classList.add("show");
+                    document.body.style.overflowY = "hidden";
+                    $('.user_add_form').html(response);
+                    $('.user_remove_form').html('');
+                },
+                error : function(xhr,errmsg,err) {
+                    $('#results').html("<div class='alert-box alert radius' data-alert>Oops! We have encountered an error: "+errmsg+
+                        " <a href='#' class='close'>&times;</a></div>"); // add the error to the dom
+                    console.log(xhr.status + ": " + xhr.responseText); // provide a bit more info about the error to the console
+                }
+
+            });
+        })
+        /////////////// Removing user from the group ///////////////
+        $(document).on('submit', '#remove_user_form',function(e){
+            e.preventDefault();
+            $('.confirm').hide();
+            $('.button-loader').show();
+            $.ajax({
+                type:'POST',
+                url:'{% url "authapp:settings" %}',
+                data:{
+                    user_to_remove: $("input[type='radio']:checked").val(),
+
+                    csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val(),
+                    action: 'remove',
+                },
+                success:function(json){
+                    $('input[type=radio]').prop('checked', false);
+                    $('.facilitator_selector').html(json);
+                    closeRemoveForm();
+                },
+                error : function(xhr,errmsg,err) {
+                    $('#results').html("<div class='alert-box alert radius' data-alert>Oops! We have encountered an error: "+errmsg+
+                        " <a href='#' class='close'>&times;</a></div>"); // add the error to the dom
+                    console.log(xhr.status + ": " + xhr.responseText); // provide a bit more info about the error to the console
+                }
+            });
+        });
+        /////////////// Add existed user to the group ///////////////
+        $(document).on('submit', '#add_user_form',function(e){
+            e.preventDefault();
+            $('.confirm').hide();
+            $('.button-loader').show();
+            $.ajax({
+                type:'POST',
+                url:'{% url "authapp:settings" %}',
+                data:{
+                    user_to_add: $("input[type='radio']:checked").val(),
+
+                    csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val(),
+                    action: 'add',
+                },
+                success:function(json){
+                    $('input[type=radio]').prop('checked', false);
+                    $('.facilitator_selector').html(json);
+                    closeAddForm();
+                },
+                error : function(xhr,errmsg,err) {
+                    $('#results').html("<div class='alert-box alert radius' data-alert>Oops! We have encountered an error: "+errmsg+
+                        " <a href='#' class='close'>&times;</a></div>"); // add the error to the dom
+                    console.log(xhr.status + ": " + xhr.responseText); // provide a bit more info about the error to the console
+                }
+            });
+        });
+        /////////////// Updating WOR Roles ///////////////
+        $(document).on('submit', '#facilitator_update_for',function(e){
+            // e.preventDefault();
+            var users_to_update_list = $(this).find("input[type='radio']:checked");
+
+            var wor_leader_update_list = {};
+            var wor_engager_update_list ={};
+            var week, element_value, user_id = "";
+            
+            for (let i=0; i<users_to_update_list.length;i++){
+                if (users_to_update_list[i].checked == true){
+                    element_value = ($(users_to_update_list[i]).val()).split("-");;
+                    // week_{{week.week_number}}-id_{{user.pk}}
+                    week = element_value[0].replace("week_", '');
+                    user_id = element_value[1].replace("id_", '');
+                    // alert("Week: "+ week +"; User ID: "+ user_id+"; ");
+                    if (($(users_to_update_list[i]).attr("name")).startsWith("leader")){
+                        wor_leader_update_list["week"] += ","+week;
+                        wor_leader_update_list['user_id'] += ","+user_id;
+                    } 
+                    else if (($(users_to_update_list[i]).attr("name")).startsWith("engager")){
+                        wor_engager_update_list["week"] += ","+week;
+                        wor_engager_update_list['user_id'] += ","+user_id;
+                    }
+                }
+            }
+            console.log("Leaders:/n")
+            console.log(JSON.stringify(wor_leader_update_list));
+            console.log("Engagers:/n"+ typeof JSON.stringify(wor_engager_update_list))
+            console.log(JSON.stringify(wor_engager_update_list));
+            $.ajax({
+                type:'POST',
+                url:'{% url "authapp:settings" %}',
+                data:{
+                    wor_leaders_list : JSON.stringify(wor_leader_update_list),
+                    wor_engagers_list : JSON.stringify(wor_engager_update_list),
+                    csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val(),
+                    action: 'update'
+                },
+                success:function(json){
+                    // alert(json.user_id);
+                },
+                error : function(xhr,errmsg,err) {
+                    $('#results').html("<div class='alert-box alert radius' data-alert>Oops! We have encountered an error: "+errmsg+
+                        " <a href='#' class='close'>&times;</a></div>"); // add the error to the dom
+                    console.log(xhr.status + ": " + xhr.responseText); // provide a bit more info about the error to the console
+                }
+            });
+        });
+    </script>
+    <!-- <script>
+        /////////////// Copy mail ///////////////
+        function findDataSpan() {
+            var div = event.target;
+            var dataSpan = div.querySelector('.data');
+
+            if (dataSpan) {
+                var textToCopy = dataSpan.innerText;
+                navigator.clipboard.writeText(textToCopy);
+
+                var parentElement = div.closest('.user_description');
+                var messageElement = parentElement.querySelector('.message');
+
+                if (!messageElement || messageElement.style.display === 'none') {
+
+                    if (!messageElement) {
+                        messageElement = document.createElement('span');
+                        messageElement.classList.add('message');
+                        parentElement.appendChild(messageElement);
+                    }
+
+                    messageElement.innerText = 'Copied';
+                    messageElement.style.display = 'inline';
+
+                    setTimeout(function() {
+                        messageElement.style.display = 'none';
+                    }, 2000); 
+                }
+            }
+        }
+      </script> -->
+{% endblock content %}

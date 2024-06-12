@@ -1,0 +1,132 @@
+{% extends "base.html" %}
+{% load static %}
+{% block page-title %} | Agenda{% endblock page-title %}
+{% block styles %}
+    <link rel="stylesheet" type="text/css" href="{% static '/css/agenda.css' %}">
+{% endblock styles %}
+
+{% block content %}
+<style>
+    .more-settings, .confetti-block{
+        display: flex;
+        justify-content: flex-end;
+        float: right;
+        position: relative;
+        width: 45%;
+    }
+    .more-settings .settings-dropdown {
+        display: none;
+    }
+    .more-settings .settings-dropdown.show{
+        display: flex;
+        z-index: 1;
+        top:0px;
+        left: 0px;
+        position: absolute;
+    }
+    .more-settings .settings-dropdown .setting-list{
+        list-style: none;
+        font-family: 'Roboto';
+        font-style: normal;
+        font-weight: 500;
+        font-size: 14px;
+        line-height: 16px;
+        color: #34220D;
+        opacity: 0.7;
+        padding: 2px 0px;
+    }
+    .more-settings .settings-dropdown .setting-list .setting-item a{
+        text-decoration: none;
+        color: inherit;
+    }
+    .more-settings img, .confetti-block img{
+        width: 20px;
+        height: 20px;
+    }
+    .more-settings .confetti{
+        margin-left: 15px;
+    }
+</style>
+<div class="agenda_content">
+    <div class="confetti-block">
+        <img class="confetti" onclick="toggleConfetti();" src="{% static '/img/confetti.jfif' %}" alt="">
+    </div>
+    <h2 class="page-title">Weekly operational review agenda</h2>
+    <div class="agenda_body">
+        <div class="agenda_description">
+            <div class="description_headling_row">
+                <div class="description_headling">Items</div>
+                <div class="description_headling">Content</div>
+            </div>
+            <div class="description_row">
+                <div class="description_item">Attendance</div>
+                <div class="description_item">Review the presence of participants and back-ups</div>
+            </div>
+            <div class="description_row">
+                <div class="description_item">SHE</div>
+                <div class="description_item">Review SHE Measures and address any SHE incidents and tips</div>
+            </div>
+            <div class="description_row">
+                <div class="description_item">Issues/Actions/Tasks</div>
+                <div class="description_item">Review due actions & update status (Short and Long Term Actions)</div>
+            </div>
+            <div class="description_row">
+                <div class="description_item">Improvements</div>
+                <div class="description_item">Review status of Problem Solving activities</div>
+            </div>
+            <div class="description_row">
+                <div class="description_item">Feedback/Recognition/Coaching</div>
+                <div class="description_item">Feedback on any relevant messages</div>
+            </div>
+            <div class="description_row">
+                <div class="description_item">Communications</div>
+                <div class="description_item">News around NBS</div>
+            </div>
+            <div class="description_row">
+                <div class="description_item">Measures</div>
+                <div class="description_item">Review previous week performance (CATS, Kronos, etc)</div>
+            </div>
+            <div class="description_row">
+                <div class="description_item">Team calendar</div>
+                <div class="description_item">Vacations, other absences</div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="right-bar">
+    {% include 'account/agenda-facilitators.html' %}
+</div>
+<script src="{% static '/js/confetti.js' %}"></script>
+<script>
+    $('.meeting-start').on("click", function(e) {
+            e.preventDefault();
+                // Confirming meeting start
+            if (confirm("Are you sure about being WOR Leader?")) {
+                alert("Please reload the page!");
+            } else {
+                return;
+            }
+            // GET AJAX request
+            $.ajax({
+                type: 'POST',
+                url: '{% url "authapp:agenda" %}',
+                data: {
+                    csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val(),
+                    action: 'change_leader'
+                },
+                success: function (response) {
+                    $('.right-bar').html(response);
+                    $('.more-settings').css("display", "none");
+                },
+                error : function(xhr,errmsg,err) {
+                    $('#results').html("<div class='alert-box alert radius' data-alert>Oops! We have encountered an error: "+errmsg+
+                        " <a href='#' class='close'>&times;</a></div>"); // add the error to the dom
+                    console.log(xhr.status + ": " + xhr.responseText); // provide a bit more info about the error to the console
+                }
+            })
+        }) 
+    $(".more-settings-icon").click(function () {
+        $(".settings-dropdown").toggleClass("show");
+    });
+</script>
+{% endblock content %}

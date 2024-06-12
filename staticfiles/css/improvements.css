@@ -1,0 +1,872 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap');
+
+/*//////////////////////////// FORM POP-UP  \\\\\\\\\\\\\\\\\\\\\\\\\\\\*/
+.form_container{
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    position: absolute;
+    visibility: hidden;
+    display: none;
+    background-color: hsla(32, 61%, 13%, 0.5); /* complimenting your modal colors */
+}
+.show {
+    visibility: visible;
+    display: block;
+}
+.form_container form{
+    padding: 12px 24px;
+}
+.improvement_form{
+    width: 33%;
+    /* #FFFFFF */
+    background: #FFFFFF;
+    /* Drop Shadow */
+    box-shadow: 0px 6px 18px rgba(0, 0, 0, 0.06);
+    border-radius: 4px;
+    /* Centering*/
+    position: relative;
+    margin: 1% auto;
+}
+.improvement_form .form-title {
+    color: green;
+    font-size: 15px;
+    border-bottom: 2px solid green;
+    padding: 16px 24px 18px 24px;
+    font-weight: 700;
+}
+.improvement_form .legend_label{
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 15px;
+    line-height: 18px;
+    color: #D64123;
+    padding: 5px 0px;
+    /* identical to box height */
+    letter-spacing: 0.01em;
+    text-transform: uppercase;
+}
+.improvement_form .form_fields{
+    display: block;
+    padding-top: 10px;
+    width: 100%;
+}
+.improvement_form .form_fields input[type="text"],  .form_fields textarea{
+    width: 100%;
+    height: 30px;
+    padding: 4px;
+    background: #F5F6F8;
+    border: 1px solid rgba(52, 34, 13, 0.3);
+    border-radius: 4px;
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 16px;
+}
+.improvement_form .form_fields textarea{
+    height: 60px;
+    resize: none;
+}
+.improvement_form .checkboxes{
+    display: block;               
+}
+.improvement_form .checkboxes .chebox_item{
+    display: inline-block;
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 14px;
+}
+.improvement_form .checkboxes .label{
+    display: block;
+    padding: 0px;              
+}
+.improvement_form input[type=radio]{
+    display: none;
+}
+.improvement_form input[type=radio] + label {
+    border: 2px solid #FFFFFF;
+    border-radius: 4px;
+    padding: 7px 16px;
+    text-transform: uppercase;
+}
+/*///////////// Status checkboxes ////////////*/
+.improvement_form .checkboxes .chebox_item_to_do input[type=radio] + label{
+    background-color: rgba(0, 143, 199, 0.2);
+    color:#008fc7;
+}
+.improvement_form .checkboxes .chebox_item_in_progress input[type=radio] + label{
+    background-color: rgba(222, 62, 136, 0.2);
+    color: #de3e89;
+}
+.improvement_form .checkboxes .chebox_item_review input[type=radio] + label{
+    background-color: rgba(234, 116, 6, 0.2);
+    color: #ea7406;
+}
+.improvement_form .checkboxes .chebox_item_done input[type=radio] + label{
+    background-color: rgba(46, 128, 37, 0.2);
+    color: #2e8025;
+}
+/*///////// Status checkboxes:checked ////////*/
+.improvement_form .chebox_item_to_do input[type=radio]:checked + label{
+    border-color: #008fc7;
+}
+.improvement_form .chebox_item_in_progress input[type=radio]:checked + label{
+    border-color: #de3e89;
+}
+.improvement_form .chebox_item_review input[type=radio]:checked + label{
+    border-color: #ea7406;
+}
+.improvement_form .chebox_item_done input[type=radio]:checked + label{
+    border-color: #2e8025;
+}
+.improvement_form .checkbox-dropdown-list img{
+    border-radius: 50%;
+    padding: 2px;
+    width: 30px;
+    height: 30px;
+}
+.improvement_form .checkbox-dropdown-list::-webkit-scrollbar {
+    width: 8px; 
+}
+.improvement_form .checkbox-dropdown-list::-webkit-scrollbar-track{
+    background-color: #aaa;
+    border-radius: 5px;
+}
+.improvement_form ::-webkit-scrollbar-thumb{
+    background-color: #34220D;
+    border-radius: 5px;
+    height: 20px;
+}
+.improvement_form .checkbox-dropdown-list input[type="checkbox"]:checked + label{
+    background-color: #63513d;
+    color: #fff;
+}
+.improvement_form .checkbox-dropdown-list input[type="checkbox"]{
+    position: absolute;
+    opacity:0;
+}
+.improvement_form .checkbox-dropdown-list img{
+    border-radius: 50%;
+    padding: 2px;
+}
+.improvement_form .checkbox-dropdown {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    border: 1px solid #aaa;
+    padding: 10px;
+    position: relative;
+    margin: 0px 25%;
+    top: -35px;
+    user-select: none;
+}
+
+/* Display CSS arrow to the right of the dropdown text */
+.improvement_form .checkbox-dropdown:after {
+    content:'';
+    height: 0;
+    position: absolute;
+    width: 0;
+    border: 6px solid transparent;
+    border-left-color: #34220D;
+    top: 30%;
+    right: 1px;
+    margin-top: -2px;
+}
+
+/* Reverse the CSS arrow when the dropdown is active */
+.improvement_form .checkbox-dropdown.is-active:after {
+    border-right-color: #34220D;
+    border-left-color: #fff;
+    margin-top: -2px;
+    right:9px;
+}
+
+.improvement_form .checkbox-dropdown-list {
+    list-style: none;
+    width: 280px;
+    margin: 0;
+    padding: 0;
+    position: absolute;
+    top: -280px; /* align the dropdown right below the dropdown text */
+    border: inherit;
+    border: 1px solid #34220D;
+    border-radius: 5px;
+    left: 25px; /* align the dropdown to the left */
+    right: -1px; /* align the dropdown to the right */
+    opacity: 0; /* hide the dropdown */
+    
+    transition: opacity 0.4s ease-in-out;
+    height: 300px;
+    overflow: scroll;
+    overflow-x: hidden;
+    pointer-events: none; /* avoid mouse click events inside the dropdown */
+    background-color: #fff;
+}
+.improvement_form .is-active .checkbox-dropdown-list {
+    opacity: 1; /* display the dropdown */
+    pointer-events: auto; /* make sure that the user still can select checkboxes */
+}
+
+.improvement_form .checkbox-dropdown-list li label {
+    display: block;
+    padding: 5px;
+    margin: 2px 5px;
+    border-bottom: 1px solid silver;
+    border-radius: 5px;
+    transition: all 0.2s ease-out;
+}
+
+.improvement_form .checkbox-dropdown-list li label:hover {
+    background-color: #F5F6F8;
+    color: #34220D;
+}
+.improvement_form .timeline{
+    margin-top: -35px;
+}
+.improvement_form .timeline input{
+    width: 40%;
+    padding: 5px 24px;
+    background-color: #F5F6F8;
+    border: 1px solid rgba(52, 34, 13, 0.3);
+    border-radius: 4px;
+    /* Text */
+    text-align: center;
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 16px;
+    display: flex;
+    align-items: center;
+    color: #34220D;
+    opacity: 0.5;
+}
+.improvement_form .timeline .start_date{
+    float: left;
+}
+.improvement_form .timeline .arrow{
+    display: inline-block;
+    width: 20%;
+}
+.improvement_form .timeline .arrow img{
+    display: block;
+    margin: 0 auto;
+}
+.improvement_form .timeline .deadline_date{
+    float: right;
+}
+.improvement_form .form_fields button{
+    display: block;
+    border: 1px solid #F5F6F8;
+    border-radius: 4px;
+    box-shadow: none;
+    float: center;
+    margin: 8px auto;
+    background: #63513D;
+    width: 200px;
+    height: 40px;
+    /* text css */
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 15px;
+    line-height: 22px;
+    text-align: center;
+    letter-spacing: 0.01em;
+    color: #FFFFFF;
+}
+.improvement_form .form_fields .cancel{            
+    background: #FFFFFF;
+    color: #63513D;
+}
+.improvement_form .form_fields .confirm:hover{
+    background:  #34220D;
+}
+.improvement_form .form_fields .cancel:hover{            
+    border-color: #34220D;
+    color: #34220D;
+}
+.improvement_form .checkbox-dropdown-list input[type="checkbox"]{
+    display: block;
+    position: absolute;
+    opacity: 0;
+    width: 80%;
+    height: 30px;
+    margin: 5px 10px;
+}
+/*////////////////////////////// CONTENT  \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\*/
+.members {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    width: 100%;
+    border-top: 1px solid rgba(52, 34, 13, 0.3);
+    padding-top: 10px;
+}
+.members img {
+    margin-right: 8px;
+    border-radius: 50%;
+    width: 35px;
+    height: 35px;
+}
+.to-do, .in-progress, .review, .done {
+    display: inline-block;
+    width: 23%;
+    background-color: #eeeeee;
+    padding: 8px 8px 8px 10px;
+    border-radius: 4px;
+    /* float: left;  */
+    vertical-align: top;
+}
+.to-do, .in-progress, .review {
+    margin-right: 10px;
+}
+.improvments-tasks {
+    width: 100%;
+}
+.task-content {
+    background-color: #fff;
+    padding: 16px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin-bottom: 8px;
+}
+.task-text .topic {
+    padding-top: 20px;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 16px;
+    color: #34220D;
+    overflow: hidden;
+}
+.task-text .task-description {
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 16px;
+    color: #34220D;
+    overflow: hidden;
+}
+.date-status span {
+    font-size: 12px;
+    line-height: 28px;
+    
+}
+.date-status .task-date{
+    float: right;
+    color: #34220D;
+}
+.dots {
+    padding-bottom: 5px;
+    padding-left: 10px;
+}
+.date-status .to-do-status{
+    color: #008FC7;
+    background: rgba(0, 143, 199, .2);
+    padding: 4px 8px;
+}
+.date-status .in-progress-status {
+    color: #DE3E88;
+    background: rgba(222, 62, 136, .2);
+    padding: 4px 8px;
+}
+.date-status .review-status {
+    color: #EB7506;
+    background: rgba(235, 117, 6, .2);
+    padding: 4px 8px;
+}
+.date-status .done-status {
+    color: #2E8025;
+    background: rgba(46, 128, 37, .2);
+    padding: 4px 8px;
+}
+.column {
+    padding-left: 10px;
+}
+.column:before {
+    content: "\A";
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    display: inline-block;
+    position: relative;
+    right: 8px;
+    bottom: 3px;
+}
+.to-do .column:before {
+    background: #007CBA;
+}
+.in-progress .column:before {
+    background: #DE3E88;
+}
+.review .column:before {
+    background: #E8B100;
+}
+.done .column:before {
+    background: #2E8025;
+}
+.update {
+    padding-right: 5%;
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 14px;
+    color: #A50064;
+}
+.add-task {
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 14px;
+    color: #007CBA;
+}
+.members {
+    width: 100%;
+    border-top: 1px solid rgba(52, 34, 13, 0.3);
+    padding-top: 10px;
+}
+.dates {
+    padding-top: 16px;
+    margin-left: 6%;
+    font-size: 12px;
+    color: #34220D;
+    width: 100%;
+}
+.start-date::after {
+    content: "→";
+    width: 16px;
+    padding-right: 15%;
+    padding-left: 15%;
+}
+.show-more {
+    text-align: center;
+    font-weight: 500;
+    padding-top: 50px;
+    /* padding-bottom: 20px; */
+}
+
+@media (min-width: 1000px) {
+    .members img {
+        margin-right: 0;
+    }
+    .members {
+        height: 45px;
+        overflow: hidden;
+    }
+    .start-date::after {
+        padding-right: 10%;
+        padding-left: 10%;
+    }
+    .task-text .topic {
+        /* height: 103px; */
+    }
+}
+@media (min-width: 1200px) {
+    .btns {
+        width: 16%;
+    }
+    .date-status span {
+        font-size: 10px;
+    }
+    .column {
+        font-size: 10px;
+    }
+    .start-date::after{
+        padding-right: 2%;
+        padding-left: 2%;
+    }
+    .dates {
+        font-size: 10px;
+        margin-left: 7%;
+    }
+    .task-text .task-description {
+        font-size: 12px;
+    }
+    .to-do, .in-progress, .review, .done {
+        width: 24%; 
+    }
+    .to-do, .in-progress, .review {
+        margin-right: 7px;
+    }
+}
+
+@media (min-width: 1400px) {
+    .members img {
+        margin-right: 3px;
+    }
+    .members {
+        height: 45px;
+        overflow: hidden;
+    }
+    .start-date::after {
+        padding-right: 10%;
+        padding-left: 10%;
+    }
+    .task-text .topic {
+        /* height: 103px; */
+    }
+    .dates {
+        font-size: 12px;
+        margin-left: 3%;
+    }
+    
+    .column {
+        font-size: 14px;
+    }
+    .column:before {
+        bottom: 3px;
+    }
+    .date-status span {
+        font-size: 12px;
+    }
+}
+@media (min-width: 1600px) {
+    .members img {
+        margin-right: 5px;
+    }
+    .dates {
+        font-size: 14px;
+        margin-left: 10%;
+    }
+    .column {
+        font-size: 18px;
+    }
+    .column:before {
+        bottom: 4px;
+    }
+    .date-status span{
+        font-size: 14px;
+    }
+    .task-text .topic {
+        font-size: 16px;
+    }
+    .task-text .task-description {
+        font-size: 13px;
+    }
+}
+@media (min-width: 2000px) {
+    .page-title {
+        font-size: 22px;
+    }
+    .dates {
+        margin-left: 17%;
+        font-size: 16px;
+        font-weight: 600;
+    }
+    .date-status span {
+        font-size: 18px;
+    }
+    .task-text .topic {
+        font-size: 18px;
+        line-height: 26px;
+    }
+    .task-text .task-description {
+        font-size: 16px;
+        line-height: 22px;
+    }
+    .column {
+        font-size: 24px;
+        font-weight: 500;
+    }
+    .column:before {
+        width: 8px;
+        height: 8px;
+    }
+    .btns span{
+        font-size: 20px;
+        line-height: 20px;
+    }
+    .btns img {
+        position: relative;
+        bottom: 2px;
+        right: 5px;
+        width: 1.2vw;
+        height: 1.2vw;
+    }
+}
+/*//////////////////////////// EDITING FORM POP-UP  \\\\\\\\\\\\\\\\\\\\\\\\\\\\*/
+.improvement_form_editing{
+    width: 33%;
+    /* #FFFFFF */
+    background: #FFFFFF;
+    /* Drop Shadow */
+    box-shadow: 0px 6px 18px rgba(0, 0, 0, 0.06);
+    border-radius: 4px;
+    /* Centering*/
+    position: relative;
+    margin: 1% auto;
+}
+.improvement_form_editing .form-title {
+    color: green;
+    font-size: 15px;
+    border-bottom: 2px solid green;
+    padding: 16px 24px 18px 24px;
+    font-weight: 700;
+}
+.improvement_form_editing .legend_label{
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 15px;
+    line-height: 18px;
+    color: #D64123;
+    padding: 5px 0px;
+    /* identical to box height */
+    letter-spacing: 0.01em;
+    text-transform: uppercase;
+}
+.improvement_form_editing .form_fields{
+    display: block;
+    padding-top: 10px;
+    width: 100%;
+}
+.improvement_form_editing .form_fields input[type="text"],  .form_fields textarea{
+    width: 100%;
+    height: 30px;
+    padding: 4px;
+    background: #F5F6F8;
+    border: 1px solid rgba(52, 34, 13, 0.3);
+    border-radius: 4px;
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 16px;
+}
+.improvement_form_editing .form_fields textarea{
+    height: 60px;
+    resize: none;
+}
+.improvement_form_editing .checkboxes{
+    display: block;               
+}
+.improvement_form_editing .checkboxes .chebox_item{
+    display: inline-block;
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 14px;
+}
+.improvement_form_editing .checkboxes .label{
+    display: block;
+    padding: 0px;              
+}
+.improvement_form_editing input[type=radio]{
+    display: none;
+}
+.improvement_form_editing input[type=radio] + label {
+    border: 2px solid #FFFFFF;
+    border-radius: 4px;
+    padding: 7px 16px;
+    text-transform: uppercase;
+}
+/*///////////// Status checkboxes ////////////*/
+.improvement_form_editing .checkboxes .chebox_item_to_do input[type=radio] + label{
+    background-color: rgba(0, 143, 199, 0.2);
+    color:#008fc7;
+}
+.improvement_form_editing .checkboxes .chebox_item_in_progress input[type=radio] + label{
+    background-color: rgba(222, 62, 136, 0.2);
+    color: #de3e89;
+}
+.improvement_form_editing .checkboxes .chebox_item_review input[type=radio] + label{
+    background-color: rgba(234, 116, 6, 0.2);
+    color: #ea7406;
+}
+.improvement_form_editing .checkboxes .chebox_item_done input[type=radio] + label{
+    background-color: rgba(46, 128, 37, 0.2);
+    color: #2e8025;
+}
+/*///////// Status checkboxes:checked ////////*/
+.improvement_form_editing .chebox_item_to_do input[type=radio]:checked + label{
+    border-color: #008fc7;
+}
+.improvement_form_editing .chebox_item_in_progress input[type=radio]:checked + label{
+    border-color: #de3e89;
+}
+.improvement_form_editing .chebox_item_review input[type=radio]:checked + label{
+    border-color: #ea7406;
+}
+.improvement_form_editing .chebox_item_done input[type=radio]:checked + label{
+    border-color: #2e8025;
+}
+.improvement_form_editing .checkbox-dropdown-list img{
+    border-radius: 50%;
+    padding: 2px;
+    width: 30px;
+    height: 30px;
+}
+.improvement_form_editing .checkbox-dropdown-list::-webkit-scrollbar {
+    width: 8px; 
+}
+.improvement_form_editing .checkbox-dropdown-list::-webkit-scrollbar-track{
+    background-color: #aaa;
+    border-radius: 5px;
+}
+.improvement_form_editing ::-webkit-scrollbar-thumb{
+    background-color: #34220D;
+    border-radius: 5px;
+    height: 20px;
+}
+.improvement_form_editing .checkbox-dropdown-list input[type="checkbox"]:checked + label{
+    background-color: #63513d;
+    color: #fff;
+}
+.improvement_form_editing .checkbox-dropdown-list input[type="checkbox"]{
+    position: absolute;
+    opacity:0;
+}
+.improvement_form_editing .checkbox-dropdown-list img{
+    border-radius: 50%;
+    padding: 2px;
+}
+.improvement_form_editing .checkbox-dropdown {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    border: 1px solid #aaa;
+    padding: 10px;
+    position: relative;
+    margin: 0px 25%;
+    top: -35px;
+    user-select: none;
+}
+
+/* Display CSS arrow to the right of the dropdown text */
+.improvement_form_editing .checkbox-dropdown:after {
+    content:'';
+    height: 0;
+    position: absolute;
+    width: 0;
+    border: 6px solid transparent;
+    border-left-color: #34220D;
+    top: 30%;
+    right: 1px;
+    margin-top: -2px;
+}
+
+/* Reverse the CSS arrow when the dropdown is active */
+.improvement_form_editing .checkbox-dropdown.is-active:after {
+    border-right-color: #34220D;
+    border-left-color: #fff;
+    margin-top: -2px;
+    right:9px;
+}
+
+.improvement_form_editing .checkbox-dropdown-list {
+    list-style: none;
+    width: 280px;
+    margin: 0;
+    padding: 0;
+    position: absolute;
+    top: -280px; /* align the dropdown right below the dropdown text */
+    border: inherit;
+    border: 1px solid #34220D;
+    border-radius: 5px;
+    left: 25px; /* align the dropdown to the left */
+    right: -1px; /* align the dropdown to the right */
+    opacity: 0; /* hide the dropdown */
+    
+    transition: opacity 0.4s ease-in-out;
+    height: 300px;
+    overflow: scroll;
+    overflow-x: hidden;
+    pointer-events: none; /* avoid mouse click events inside the dropdown */
+    background-color: #fff;
+}
+.improvement_form_editing .is-active .checkbox-dropdown-list {
+    opacity: 1; /* display the dropdown */
+    pointer-events: auto; /* make sure that the user still can select checkboxes */
+}
+
+.improvement_form_editing .checkbox-dropdown-list li label {
+    display: block;
+    padding: 5px;
+    margin: 2px 5px;
+    border-bottom: 1px solid silver;
+    border-radius: 5px;
+    transition: all 0.2s ease-out;
+}
+
+.improvement_form_editing .checkbox-dropdown-list li label:hover {
+    background-color: #F5F6F8;
+    color: #34220D;
+}
+.improvement_form_editing .timeline{
+    margin-top: -35px;
+}
+.improvement_form_editing .timeline input{
+    width: 40%;
+    padding: 5px 24px;
+    background-color: #F5F6F8;
+    border: 1px solid rgba(52, 34, 13, 0.3);
+    border-radius: 4px;
+    /* Text */
+    text-align: center;
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 16px;
+    display: flex;
+    align-items: center;
+    color: #34220D;
+    opacity: 0.5;
+}
+.improvement_form_editing .timeline .start_date{
+    float: left;
+}
+.improvement_form_editing .timeline .arrow{
+    display: inline-block;
+    width: 20%;
+}
+.improvement_form_editing .timeline .arrow img{
+    display: block;
+    margin: 0 auto;
+}
+.improvement_form_editing .timeline .deadline_date{
+    float: right;
+}
+.improvement_form_editing .form_fields button{
+    display: block;
+    border: 1px solid #F5F6F8;
+    border-radius: 4px;
+    box-shadow: none;
+    float: center;
+    margin: 8px auto;
+    background: #63513D;
+    width: 200px;
+    height: 40px;
+    /* text css */
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 15px;
+    line-height: 22px;
+    text-align: center;
+    letter-spacing: 0.01em;
+    color: #FFFFFF;
+}
+.improvement_form_editing .form_fields .cancel{            
+    background: #FFFFFF;
+    color: #63513D;
+}
+.improvement_form_editing .form_fields .confirm:hover{
+    background:  #34220D;
+}
+.improvement_form_editing .form_fields .cancel:hover{            
+    border-color: #34220D;
+    color: #34220D;
+}
+.improvement_form_editing .checkbox-dropdown-list input[type="checkbox"]{
+    display: block;
+    position: absolute;
+    opacity: 0;
+    width: 80%;
+    height: 30px;
+    margin: 5px 10px;
+}

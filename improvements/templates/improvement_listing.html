@@ -1,0 +1,190 @@
+{% load static %}
+<div class="to-do">
+    <p class="column">TO DO</p>
+    <div class="improvments-tasks">
+        {% for improvement in improvements %}
+            {% if improvement.group in request.user.groups.all %}
+                {% if improvement.status == 'to_do' %}
+                    <div class="task-content">
+                        <div class="date-status">
+                            <span class="to-do-status">TO DO</span> 
+                            <span class="task-date">{{improvement.creation_date}} 
+                                <a id="{{improvement.pk}}" class="title_click" href="#" ><img class="dots" alt="Edit" title="Edit" title="Edit" alt="Edit" src="{% static 'img/dots.png' %}"></a>
+                            </span>
+                        </div>
+                        <div class="task-text">
+                            <p class="topic">{{improvement.title}}</p>
+                            <p class="task-description">{{improvement.description}}</p>
+                        </div>
+                        <div class="members">
+                            {% for user in improvement.assigned_user.all %}
+                                <img src="{{ user.user_image.url }}"
+                                     alt="{{user.first_name}} {{user.last_name}}"
+                                     title="{{user.first_name}} {{user.last_name}}">
+                            {% endfor %}
+                        </div>
+                        <div class="dates">
+                            <span class="start-date">{{improvement.start_date}}</span>
+                            <span class="finish-date">{{improvement.deadline_date}}</span>
+                        </div>
+                    </div>
+                {% endif %}
+            {% endif %}
+        {% endfor %}
+    </div>
+</div>
+<div class="in-progress">
+    <p class="column">IN PROGRESS</p>
+    <div class="improvments-tasks">
+        {% for improvement in improvements %}
+            {% if improvement.group in request.user.groups.all %}
+                {% if improvement.status == 'in_progress' %}
+                    <div class="task-content">
+                        <div class="date-status">
+                            <span class="in-progress-status">IN PROGRESS</span> 
+                            <span class="task-date">{{improvement.creation_date}}
+                                <a id="{{improvement.pk}}"  class="title_click" href="#"><img class="dots" alt="Edit" title="Edit" src="{% static 'img/dots.png' %}"></a>
+                            </span>
+                        </div>
+                        <div class="task-text">
+                            <p class="topic">{{improvement.title}}</p>
+                            <p class="task-description">{{improvement.description}}</p>
+                        </div>
+                        <div class="members">
+                            {% for user in improvement.assigned_user.all %}
+                                <img src="{{ user.user_image.url }}"
+                                     alt="{{user.first_name}} {{user.last_name}}"
+                                     title="{{user.first_name}} {{user.last_name}}"
+                                >
+                            {% endfor %}    
+                        </div>
+                        <div class="dates">
+                            <span class="start-date">{{improvement.start_date}}</span>
+                            <span class="finish-date">{{improvement.deadline_date}}</span>
+                        </div>
+                    </div>
+                    {% endif %}
+            {% endif %}
+        {% endfor %}
+    </div>
+</div>
+<div class="review">
+    <p class="column">REVIEW</p>
+    <div class="improvments-tasks">
+        {% for improvement in improvements %}
+            {% if improvement.group in request.user.groups.all %}
+                {% if improvement.status == 'review' %}
+                    <div class="task-content">
+                        <div class="date-status">
+                            <span  class="review-status">REVIEW</span> 
+                            <span class="task-date">{{improvement.creation_date}}
+                                <a id="{{improvement.pk}}" class="title_click" href="#"><img class="dots" alt="Edit" title="Edit" src="{% static 'img/dots.png' %}"></a>
+                            </span>
+                        </div>
+                        <div class="task-text">
+                            <p class="topic">{{improvement.title}}</p>
+                            <p class="task-description">{{improvement.description}}</p>
+                        </div>
+                        <div class="members">
+                            {% for user in improvement.assigned_user.all %}
+                                <img src="{{ user.user_image.url }}"
+                                     alt="{{user.first_name}} {{user.last_name}}"
+                                     title="{{user.first_name}} {{user.last_name}}"
+                                >
+                            {% endfor %} 
+                        </div>
+                        <div class="dates">
+                            <span class="start-date">{{improvement.start_date}}</span>
+                            <span class="finish-date">{{improvement.deadline_date}}</span>
+                        </div>
+                    </div>
+                {% endif %}
+            {% endif %}
+        {% endfor %}
+    </div>
+</div>
+<div class="done">
+    <p class="column">DONE</p>
+    <div class="improvments-tasks">
+        {% for improvement in improvements %}
+            {% if improvement.group in request.user.groups.all %}
+                {% if improvement.status == 'done' %}
+                    <div class="task-content">
+                        <div class="date-status">
+                            <span class="done-status">DONE</span> 
+                            <span class="task-date">{{improvement.creation_date}}
+                                <a id="{{improvement.pk}}" class="title_click" href="#"><img class="dots" alt="Edit" title="Edit" src="{% static 'img/dots.png' %}"></a>
+                            </span>
+                        </div>
+                        <div class="task-text">
+                            <p class="topic">{{improvement.title}}</p>
+                            <p class="task-description">{{improvement.description}}</p>
+                        </div>
+                        <div class="members">
+                            {% for user in improvement.assigned_user.all %}
+                                <img src="{{ user.user_image.url }}"
+                                     alt="{{user.first_name}} {{user.last_name}}"
+                                     title="{{user.first_name}} {{user.last_name}}"
+                                >
+                            {% endfor %} 
+                        </div>
+                        <div class="dates">
+                            <span class="start-date">{{improvement.start_date}}</span>
+                            <span class="finish-date">{{improvement.deadline_date}}</span>
+                        </div>
+                    </div>
+                {% endif %}
+            {% endif %}
+        {% endfor %}
+    </div>
+</div>
+<script>
+    $('.title_click').on("click", function(e) {
+        // get the action id
+        var improvement_pk = $(this).attr("id");
+        // GET AJAX request
+        $.ajax({
+            type: 'GET',
+            url: '{% url "improvements:improvements_main" %}',
+            data: {
+                improvement_pk: improvement_pk,
+                csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val(),
+                action: 'get_data'
+            },
+            success: function (response) {
+                var form = $("form#improvement_editing_form");
+                form.attr("value", response.improvement_pk);
+                form.children('.checkboxes').children('.chebox_item_'+response.status+'').children('input').prop('checked', true);
+                
+                form.children('.form_fields').children('.improvement_form_title').children('input').attr("value",response.title);
+                form.children('.form_fields').children('.improvement_description').children('textarea').val(response.description);
+                
+                form.children('.form_fields').children('.start_date').attr("value",response.start_date);
+                form.children('.form_fields').children('.deadline_date').attr("value",response.deadline_date);
+
+                assigned_user_list = response.assigned_users.replace(/,/ , '')
+                list_of_users = $('')
+                
+                $(form).find("input[type='checkbox']").prop('checked', false);
+                var checkbox_list = $(form).find("input[type='checkbox']")
+                for (let i=0; i<assigned_user_list.length;i++){
+                    // form.find("input[type='checkbox']#"+assigned_user_list[id]+"").prop('checked', true);
+                    for (let j=0; j<$(checkbox_list).length;j++){
+                        if ($(checkbox_list[j]).attr("value") == assigned_user_list[i]){
+                            $(checkbox_list[j]).prop('checked', true);
+                        }  
+                    }  
+                }
+
+                var element = document.getElementById("edit-popup");
+                element.classList.add("show");
+                document.body.style.overflowY = "hidden";
+            },
+            error : function(xhr,errmsg,err) {
+                $('#results').html("<div class='alert-box alert radius' data-alert>Oops! We have encountered an error: "+errmsg+
+                    " <a href='#' class='close'>&times;</a></div>"); // add the error to the dom
+                console.log(xhr.status + ": " + xhr.responseText); // provide a bit more info about the error to the console
+            }
+        })
+    })
+</script>

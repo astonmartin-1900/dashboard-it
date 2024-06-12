@@ -1,0 +1,30 @@
+<form id="add_user_form" method="POST">
+    <h3 class="form-title">Add existed user to group</h3>
+    {% csrf_token %}
+    <div class="form_content">
+        <div class="form_fields">
+            <fieldset class="checkbox-list">
+                <ul class="checkbox-user-list"> 
+                    {% for user in unassigned_users_list %}
+                        <li>
+                            <input type="radio" id="{{user.pk}}" value="{{user.pk}}" name="assigned_user"/>
+                            <label for="{{user.pk}}">
+                                <img alt="{{user.first_name}} {{user.last_name}}"
+                                        title="{{user.first_name}} {{user.last_name}}"  
+                                        src="{{user.user_image.url}}">
+                                <span class="performer_name">{{user.first_name}}</span>
+                                <span class="performer_surname">{{user.last_name}}</span> 
+                            </label>
+                        </li>
+                    {% endfor %}    
+                </ul>
+            </fieldset>
+        </div>
+        <div class="form_fields buttons">
+            <button class="button confirm" type="submit">Confirm</button>
+            <button style="display: none;" class="button button-loader">{% include 'button-loader.html' %}</button>
+            <a  href="#"  onclick="closeAddForm()" class="cancel">Cancel</a>
+        </div>
+    </div>
+    {% include 'loader.html' %}
+</form>

@@ -1,0 +1,157 @@
+{% extends "base.html" %}
+{% load static %}
+{% block page-title %} | Attendance{% endblock page-title %}
+{% block styles %}
+    <link rel="stylesheet" type="text/css" href="{% static '/css/attendance.css' %}">
+{% endblock styles %}
+{% block content %}
+<div>  
+    <div class="btns">
+        <a href="#" onclick="openForm()"><img src="{% static '/img/update.png' %}" alt="update page"> <span class="update">Update</span></a>
+        <a href="{% url 'attendance:attendance_history' %}">
+            <img src="{% static '/img/view.png' %}" alt="View history">
+            <span class="add-task">View history</span>
+        </a>
+    </div>
+    <h2 class="page-title">Attendance</h2>
+    <div class="icons_info">
+        <ul class="leader_engager_icons">
+            <li class="leader_info"><img src="{% static '/img/leader_icon_drk.svg' %}" alt="leader"><span>WOR LEADER</span></li>
+            <li class="leader_info"><img class="padding_info" src="{% static '/img/engager_icon_drk.svg ' %}" alt="engager"><span>COMUNICATION ENGAGER</span></li>
+        </ul>
+        <ul class="leader_engager_status">
+            <li class="leader_info"><span class="circle_present"></span><span>Yes, present</span></li>
+            <li class="leader_info"><span class="circle_absent"></span><span>No, not present</span></li>
+            <li class="leader_info"><span class="circle_excused "></span><span>Excused (back-up in place)</span></li>
+            <li class="leader_info"><span class="circle_vacation "></span><span>On Vacation</span></li>
+        </ul>
+    </div>
+</div>
+<div class="attendance_content">
+    <div class="names">
+        <table>
+            <tr>
+                    <td ><span>Names</span><span><br>IMS Team</br></span></td>
+            </tr>
+            {% for user in users%} 
+                <tr>
+                    <td>{{user.first_name}} {{user.last_name}}</td>
+                </tr>
+            {% endfor%}
+        </table>
+    </div>
+    <div class="weeks">
+        {% include 'attendance-list.html' %}
+    </div>
+</div>
+<!------------ Form POP-UP ------------->
+<div class="form_container" id="popup">
+    <div class="attendance_form">
+        <h3 class="form-title">Week #<span id="current_week_id">{{current_week}}</span> Attendance: Provide an action</h3>
+        <form method="post" id="attendance_update_form">
+            {% csrf_token %}
+            <div class="users_container">
+                {% for user in users%}
+                    <div class="user_to_action">
+                        <div class="user_information">
+                            <div class="user_image"> <img alt="{{user.first_name}} {{user.last_name}}" src="{{user.user_image.url}}"> </div>
+                            <div class="user_name_block">
+                                <span class="user_name">{{user.first_name}} {{user.last_name}}</span>
+                            </div>
+                        </div>
+                        <fieldset class="action_buttons">
+                            <div class="button_item present">
+                                <input type="radio" id="present_{{user.id}}" name="status_user_{{user.id}}" value="present" checked>
+                                <label for="present_{{user.id}}">Present</label>
+                            </div>                   
+                            <div class="button_item absent">
+                                <input type="radio" id="absent_{{user.id}}" name="status_user_{{user.id}}" value="absent"
+                                {% for attendance in attendances%}
+                                {{% if user.pk == attendance.person.pk and attendance.date.week_number == current_week %}                                        
+                                        {% if attendance.user_status == 'absent' %}   
+                                            checked
+                                        {% endif %}
+                                    {% endif %}
+                                {% endfor%}
+                                >
+                                <label for="absent_{{user.id}}">Not present </label>
+                            </div>                                        
+                            <div class="button_item excused">
+                                <input type="radio" id="excused_{{user.id}}" name="status_user_{{user.id}}" value="excused"
+                                {% for attendance in attendances%}
+                                    {% if user.pk == attendance.person.pk and attendance.date.week_number == current_week %}
+                                        {% if attendance.user_status == 'excused' %}   
+                                            checked 
+                                        {% endif %}
+                                    {% endif %}
+                                {% endfor%}
+                                >
+                                <label for="excused_{{user.id}}">Excused</label>
+                            </div>                                            
+                            <div class="button_item on_vacation">
+                                <input type="radio" id="on_vacation_{{user.id}}" name="status_user_{{user.id}}" value="on_vacation"
+                                {% for attendance in attendances%}
+                                    {% if user.pk == attendance.person.pk and attendance.date.week_number == current_week %}
+                                        {% if attendance.user_status == 'on_vacation' %}   
+                                            checked 
+                                        {% endif %}
+                                    {% endif %}
+                                {% endfor%}
+                                >
+                                <label for="on_vacation_{{user.id}}">On Vacation</label>
+                            </div>
+                        </fieldset>
+                    </div>
+                {% endfor %}
+            </div>
+            <div class="button_form_field">
+                <button class="button submit" type="submit">Confirm</button>
+                <button style="display: none;" class="button button-loader">{% include 'button-loader.html' %}</button>
+                <button type="button" onclick="closeForm()" class="button cancel">Cancel</button>  
+            </div> 
+        </form>        
+    </div>
+</div>
+<script src="{% static '/js/attendance.js' %}"></script>
+<script>
+    $(document).on('submit', '#attendance_update_form',function(e){
+        e.preventDefault();
+        $('.submit').hide();
+        $('.button-loader').show();
+        
+        var user_selected_statuses_list = $(this).find("input[type='radio']:checked");
+        var user_status_dictionary = {};
+
+        for (let i=0; i<user_selected_statuses_list.length;i++){
+            user_status_dictionary[(user_selected_statuses_list[i].name).replace('status_user_', '')] = user_selected_statuses_list[i].value;
+        }
+
+        $.ajax({
+            type:'POST',
+            url:"{% url 'attendance:attendance_page' %}",
+            data:{
+                current_week: $('#current_week_id').html(),
+                user_status_dictionary: JSON.stringify(user_status_dictionary),
+                csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val(),
+                action: 'update'
+            },
+            success:function(response){
+                $('.confirm').show();
+                $('.button-loader').hide();
+                var element = document.getElementById("popup");
+                element.classList.remove("show");
+                document.body.style.overflowY = "scroll";
+                $(".weeks").html(response);
+            },
+            error : function(xhr,errmsg,err) {
+                $('.confirm').show();
+                $('.button-loader').hide();
+                $('#results').html("<div class='alert-box alert radius' data-alert>Oops! We have encountered an error: "+errmsg+
+                    " <a href='#' class='close'>&times;</a></div>"); // add the error to the dom
+                console.log(xhr.status + ": " + xhr.responseText); // provide a bit more info about the error to the console
+            }
+        });
+    });  
+    
+</script>
+{% endblock content %}

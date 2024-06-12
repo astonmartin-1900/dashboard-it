@@ -1,0 +1,74 @@
+/* Delete next style after development */
+.content-block{
+    display: flex;
+    position: relative;
+    margin: 0px;
+    padding: 15px 50px;
+}
+/* ////////////////////////////////// */
+.toggeled_content {
+    width: 94.333333%;
+}
+.she-block {
+    display: block;
+    float: left;
+    width: 55%;
+}
+.helpfull-tips {
+    display: block;
+    float: right;
+    width: 40%;
+}
+.toggeled_content .she {
+    float: left;
+    width: 53%;
+}
+.she-img {
+    width: 100%;
+}
+.advertisement {
+    display: flex;
+    padding-top: 25px;
+    box-shadow: 0px 6px 18px rgba(0, 0, 0, 0.06);
+}
+.advertisement img {
+    width: 40%;
+    float: left;
+    padding: 10px;
+    height: 100%;
+}
+.advertisement_text {
+    display: table-cell;
+    padding: 0px 20px;
+    font-size: 13px;
+}
+.advertisement_text p {
+    height: 120px;
+    overflow: hidden;
+    text-align: justify;
+}   
+
+tr:nth-child(even) {
+    background-color: #F5F6F8;
+}
+.tips {
+    font-size: 12px;
+}
+.tips tr {
+    display: block;
+    margin: 24px 0px;
+    box-shadow: 0px 6px 18px rgba(0, 0, 0, 0.06);
+}
+.tips tr:first-child{
+    margin: 0px;
+}
+.tips tr td p {
+    margin: 8px 0px;
+    padding-right: 4px 10px 4px 0px;
+}
+.tips tr td img {
+    margin-left: 12px;
+}
+.tips tr td:first-of-type {
+    width: 40px;
+}

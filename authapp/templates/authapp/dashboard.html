@@ -1,0 +1,171 @@
+{% extends "base.html" %}
+{% load static %}
+{% block page-title %} | Profile Settings{% endblock page-title %}
+{% block title %}Dashboard{% endblock title %}
+{% block styles %}
+    <link rel="stylesheet" type="text/css" href="{% static '/css/account.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static '/css/profile.css' %}">
+{% endblock styles %}
+{% block content %}
+{% if not profile_information.groups.first %}
+  <div class="form_container">
+      <div class="message_form">
+          <h3 class="form-title">Access to the specific group board needs to be gained!</h3>
+          <div class="message">
+              <p>Dear {{profile_information.first_name}} {{profile_information.last_name}}, </p>
+              <p>Currently, you do not have access to any group that is essential for collaboration and information sharing within the website. 
+                 We kindly request you to contact your line manager to be added to the relevant group.</p>
+              <p>Kindly regards, development team.</p>
+              <p style="text-align: center;"><a href="/logout">Logout</a></p>
+          </div>
+      </div>
+  </div>
+  <style>
+    .form_container{
+        display: flex;
+        position: fixed;
+        visibility: visible;
+        z-index: 2;
+        width: 100%;
+        height: 100%;
+        left: 0;
+        top: 0;
+        justify-content: center;
+        align-items: center;
+        border-radius: 5px;
+        background-color: rgba(22, 22, 22, 0.5); /* complimenting your modal colors */
+    }
+    .message_form{
+        padding: 10px;
+        display: block;
+        width: 50%;
+        /* #FFFFFF */
+        background: #FFFFFF;
+        /* Drop Shadow */
+        box-shadow: 0px 6px 18px rgba(0, 0, 0, 0.06);
+        border-radius: 4px;
+    }
+    .message_form .form-title {
+        text-align: left;
+        color: green;
+        font-size: 15px;
+        border-bottom: 2px solid green;
+        margin: 0 12px 12px 12px;
+        padding: 12px 0px;
+        font-weight: 700;
+    }
+    .message_form .message{
+        padding: 12px;
+        font-weight: 400;
+    }
+  </style>
+{% endif %}
+<div class="headling">
+    <div class="btns">
+      <a class="edit_profile" href="{% url 'authapp:edit' %}">Edit your profile</a>
+      <a class="password_change" href="{% url 'authapp:password_change' %}">Change your password</a>
+    </div>
+    <h2 class="page-title">Settings</h2>
+    <div class="content_tabs">
+        <a href="#" class="active">Account setup</a>
+        <a href="{% url 'authapp:settings' %}">Facilitator settings</a>
+    </div>
+</div>
+<div class="user_about">
+  <div class="user_visuals">
+    <div class="user_image">
+      <img src="{{profile_information.user_image.url}}" alt="">
+    </div>
+    <div class="user_recognitions">
+      <div class="member_stars">
+        <div class="star initiative">
+            <img src="{% static '/img/star.svg' %}" name="initiative" id="{{recognition.id}}" class="star_click">
+            <span name="initiative_{{recognition.id}}" id="{{recognition.id}}">{{recognitions.initiative_value}}</span>
+        </div>
+        <div class="star ube">
+            <img src="{% static '/img/star.svg' %}" name="ube" id="{{recognition.id}}" alt="" class="star_click">
+            <span name="ube_{{recognition.id}}" id="{{recognition.id}}">{{recognitions.understand_value}}</span>
+        </div>
+        <div class="star pwyp">
+            <img src="{% static '/img/star.svg' %}" name="pwyp" id="{{recognition.id}}" alt="" class="star_click">
+            <span name="pwyp_{{recognition.id}}" id="{{recognition.id}}">{{recognitions.practice_value}}</span>
+        </div>
+        <div class="star resut_focus">
+            <img src="{% static '/img/star.svg' %}" name="resut_focus" id="{{recognition.id}}" alt="" class="star_click">
+            <span name="resut_focus_{{recognition.id}}" id="{{recognition.id}}">{{recognitions.result_focus_value}}</span>
+        </div>
+        <div class="star know_yourself">
+            <img src="{% static '/img/star.svg' %}" name="know_yourself" id="{{recognition.id}}" alt="" class="star_click">
+            <span name="know_yourself_{{recognition.id}}" id="{{recognition.id}}">{{recognitions.know_yourself_value}}</span>
+        </div>
+        <div class="star proactive_cooperation">
+            <img src="{% static '/img/star.svg' %}" name="proactive_cooperation" id="{{recognition.id}}" alt="" class="star_click">
+            <span name="proactive_cooperation_{{recognition.id}}" id="{{recognition.id}}">{{recognitions.cooperation_value}}</span>
+        </div>
+      </div>
+      <div class="total_stars">
+          <span>Total:</span>
+          <span name="total_stars_{{recognition.id}}"> {{recognitions.total_stars}}</span>
+      </div>
+    </div>
+  </div>
+  <div class="user_profile_description">
+    <div class="user_name">
+      <p class="label">First and Last Name</p>
+      <p>{{profile_information.first_name}} {{profile_information.last_name}}</p>
+    </div>
+    <div class="user_emal">
+      <p class="label">E-mail</p>
+      <p>{{profile_information.email}}</p>
+    </div>
+    <div class="user_position">
+      <p class="label">Position</p>
+      <p>{{profile_information.user_position}} </p>
+    </div>  
+    <div class="user_description">
+        <p class="label">My description (max 130 symbols)</p>
+        <p>{{profile_information.user_about}}</p>
+    </div>
+  </div>
+</div>
+<div class="user_actions">
+  <p class="label">Active actions:</p>
+  <div class="actions_list">
+    <!-- For loop one block -->
+    {% if actions %}
+      {% for action in actions %}
+        {% if request.user in action.assigned_user.all %}
+          <div class="task-content">
+            <div class="date-status">
+                <span class="{{action.action_status}}-status">In progress</span> 
+                <span class="task-date">{{action.deadline_date|date:"d/M"}}</span>
+            </div>
+            <div class="task-text">
+                <p class="topic">{{action.issue_name}}</p>
+                <!-- <p class="task-description"> {{action.action_text}}</p>
+                <p class="task-description"> {{action.solution_text}}</p> -->
+            </div>
+            <!-- <div class="members">
+              {% if action.assigned_user.all.count == group_members %}
+                    <div class="img-block all">
+                        <img src="{% static '/img/all_users.svg' %}"" alt="All users">
+                    </div>
+                {% else %}
+                    <div class="img-block">
+                        {% for user in action.assigned_user.all %}
+                            <img alt="{{user.first_name}} {{user.last_name}}" 
+                                title="{{user.first_name}} {{user.last_name}}"
+                                src="{{user.user_image.url}}"> 
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            </div> -->
+          </div>
+        {% endif %}
+      {% endfor %}
+    {% else %} 
+      <p class="label" style="display: block; margin: auto;padding: 2%;">No active actions!</p>
+    {% endif %}
+  </div>
+</div>
+{% endblock content %}
